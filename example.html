@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+
+<html>
+  <h1>Uiua HTML Generation</h1>
+  <h2>Overview</h2>
+  <div>
+    <p style="white-space: pre">
+      This library allows you to write html using uiua code.
+      You can easily create static pages with this.
+    </p>
+    <p style="white-space: pre">
+      An example could look like:
+      <code style="line-height: 1">
+        Html!() {
+          H₁!() {"Level 1.1"}
+          Div!() {
+            H₂!() {"Level 2.1"}
+            H₂!() {"Level 2.2"}
+          }
+          H₁!() {"Level 1.2"}
+        }
+      </code>
+      This would then be turned into:
+      <code style="line-height: 1">
+        &lt;html &gt;
+          &lt;h1 &gt;
+            Level 1.1
+          &lt;/h1&gt;
+          &lt;div &gt;
+            &lt;h2 &gt;
+              Level 2.1
+            &lt;/h2&gt;
+            &lt;h2 &gt;
+              Level 2.2
+            &lt;/h2&gt;
+          &lt;/div&gt;
+          &lt;h1 &gt;
+            Level 1.2
+          &lt;/h1&gt;
+        &lt;/html&gt;
+      </code>
+      Note that the contents of each tag are entirely up to you.
+      They can be regular strings or other tags that are implemented.
+    </p>
+    <p style="white-space: pre">
+      In any given tag like
+      <code>
+        Html!(...) {...}
+      </code>
+      the parentheses can be used to set attributes,
+      while the curly braces are used for the content.
+      Attributes are formatted like
+      <code>
+        Name₁ → "Value₁", Name₂ → "Value₂"...
+      </code>
+      where Name and Value can be changed as necessary.
+      No trailing whitespace or commas are allowed.
+      Note that whitespace is important.
+    </p>
+  </div>
+  <div>
+    <h3>Check this stuff out!</h3>
+    <a href="https://www.github.com/donstenzel">GitHub</a>
+    <h4><a href="https://www.github.com/donstenzel/html.ua">Source</a></h4>
+  </div>
+</html>

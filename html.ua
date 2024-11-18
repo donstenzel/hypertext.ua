@@ -1,4 +1,3 @@
-#!/usr/bin/env -S uiua run
 # Experimental!
 
 # Joins `segments` with given `seperator`.
@@ -38,17 +37,17 @@ Format! ←^ ⍚($"($_ _)" ⊙/$"_ _" °⊂ ExtractAll)
 
 # Creates a module and macro for html tags.
 Tag! ←^ (
-  ⟜⟜⟜⟜⟜⟜∘ °□₁
-  $$ ┌─╴_ ~ _!
+  ⟜⟜⟜⟜⟜∘ °□₁
+  $$ ┌─╴_
   $$   ~{Attributes Content Type ← "_"}
   $$   # Creates a new element of type _.
   $$   # _!(Attrs){Content}
-  $$   _! ←^ ⍚(
-  $$     ⌝⊝ ", "
-  $$     ⍚°$"\_ → \"\_\""
-  $$     $"_ map \_ \_"
-  $$   )
   $$ └─╴
+  $$ _! ←^ ⍚(
+  $$   ⌝⊝ ", "
+  $$   ⍚°$"\_ → \"\_\""
+  $$   $"_ map \_ \_"
+  $$ )
 )
 
 Tag!Html
@@ -71,87 +70,29 @@ Tag!H₆
   FormatAttributes ↚ ⨬∘(⊂@\s)⊸(>0⧻) ⊝ @\s ⍚$"_=\"_\"" °map
   FmtAttrs         ↚ FormatAttributes
 
+  # Escapes certain characters for html.
   Sanitize ← (
     Replace @& "&amp;"
     Replace @< "&lt;"
     Replace @> "&gt;")
 
-  # a simple example
-  Example ← Html!() {
-    H₁!() {"Uiua HTML Generation"}
-    H₂!() {"Overview"}
-    Div!() {
-      P!(style → "white-space: pre") {
-        $ This library allows you to write html using uiua code.
-        $ You can easily create static pages with this.
-      }
-      P!(style → "white-space: pre") {
-        $ An example could look like:
-        Code!(style → "line-height: 1") {
-          $ Example ← Html!() {
-          $   H₁!() {"Level 1.1"}
-          $   Div!() {
-          $     H₂!() {"Level 2.1"}
-          $     H₂!() {"Level 2.2"}
-          $   }
-          $   H₁!() {"Level 1.2"}
-          $ }
-        }
-
-        $ This would then be turned into:
-        Code!(style → "line-height: 1") {
-          $ <html >
-          $   <h1 >
-          $     Level 1.1
-          $   </h1>
-          $   <div >
-          $     <h2 >
-          $       Level 2.1
-          $     </h2>
-          $     <h2 >
-          $       Level 2.2
-          $     </h2>
-          $   </div>
-          $   <h1 >
-          $     Level 1.2
-          $   </h1>
-          $ </html>
-        }
-        $ Note that the contents of each tag are entirely up to you.
-        $ They can be regular strings or other tags that are implemented.
-      }
-      P!(style → "white-space: pre") {
-        $ In any given tag like
-        Code!() {"Html!(...) {...}"}
-        $ the parentheses can be used to set attributes,
-        $ while the curly braces are used for the content.
-        $ 
-        $ Attributes are formatted like
-        Code!() {"Name₁ → \"Value₁\", Name₂ → \"Value₂\"..."}
-        $ where Name and Value can be changed as necessary.
-        $ No trailing whitespace or commas are allowed.
-        $ Note that whitespace is important.
-      }
-    }
-    Div!() {
-      H₃!() {"Check this stuff out!"}
-      A!(href → "https://www.github.com/donstenzel") {"GitHub"}
-      H₄!() {A!(href → "https://www.github.com/donstenzel/html.ua") {"Source"}}
-    }
-  } # 
-
+  # Creates a tag that is placed on newlines and also places
+  # its content on newlines.
   Expanded! ←^ ⍚(
     ⟜∘ °$"\"_\""
     $$ ⊓FmtAttrs(Indent /◇⊂ ⍚Render)
     $$ $"\n<_\_>\n\_\n</_>\n"
-  ) # 
+  )
 
+  # Creates a tag that is placed on newlines but inlines
+  # its content.
   Simple! ←^ ⍚(
     ⟜∘ °$"\"_\""
     $$ ⊓FmtAttrs(⊝@\n ⍚Render)
     $$ $"\n<_\_>\_</_>\n"
-  ) # 
+  )
 
+  # Creates a tag that is inlined.
   Inline! ←^ ⍚(
     ⟜∘ °$"\"_\""
     $$ ⊓FmtAttrs(⊝@\n ⍚Render)
@@ -187,6 +128,3 @@ Tag!H₆
     )
   )
 └─╴
-
-Save ← ⍜&fras⋅(HTML~Render HTML~Example) "/home/sbinder/uiua-html.html"
-Save
