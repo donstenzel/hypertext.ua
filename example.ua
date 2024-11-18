@@ -1,30 +1,21 @@
+#!/usr/bin/env -S uiua run
 # Experimental!
-~ "html.ua"
-  ~ A!
-  ~ Code!
-  ~ Div!
-  ~ HTML
-  ~ Html!
-  ~ H₁!
-  ~ H₂!
-  ~ H₃!
-  ~ H₄!
-  ~ P!
+~ "html.ua" ~ A! Code! Div! HTML Html! H₁! H₂! H₃! H₄! P!
 
 Html!() {
   H₁!() {"Uiua HTML Generation"}
-  H₂!() {"Overview"}
   Div!() {
+    H₃!() {"Overview"}
     P!(style → "white-space: pre") {
       $ This library allows you to write html using uiua code.
       $ You can easily create static pages with this.
     }
-    P!(style → "white-space: pre") {
+    P!(style → "white-space: pre; line-height: 1") {
       $ An example could look like:
-      Code!(style → "line-height: 1") {
+      Code!() {
         $ Html!() {
         $   H₁!() {"Level 1.1"}
-        $   Div!() {
+        $   Div!(style → "line-height: 1") {
         $     H₂!() {"Level 2.1"}
         $     H₂!() {"Level 2.2"}
         $   }
@@ -32,29 +23,23 @@ Html!() {
         $ }
       }
       $ This would then be turned into:
-      Code!(style → "line-height: 1") {
-        $ <html >
-        $   <h1 >
-        $     Level 1.1
-        $   </h1>
-        $   <div >
-        $     <h2 >
-        $       Level 2.1
-        $     </h2>
-        $     <h2 >
-        $       Level 2.2
-        $     </h2>
+      Code!() {
+        $ <!DOCTYPE html>
+        $ 
+        $ <html>
+        $   <h1>Level 1.1</h1>
+        $   <div style="line-height: 1">
+        $     <h2>Level 2.1</h2>
+        $     <h2>Level 2.2</h2>
         $   </div>
-        $   <h1 >
-        $     Level 1.2
-        $   </h1>
+        $   <h1>Level 1.2</h1>
         $ </html>
       }
       $ Note that the contents of each tag are entirely up to you.
       $ They can be regular strings or other tags that are implemented.
     }
     P!(style → "white-space: pre") {
-      $ In any given tag like
+      $ In any given tag like:
       Code!() {"Html!(...) {...}"}
       $ the parentheses can be used to set attributes,
       $ while the curly braces are used for the content.
@@ -68,7 +53,7 @@ Html!() {
   }
   Div!() {
     H₃!() {"Check this stuff out!"}
-    A!(href → "https://www.github.com/donstenzel") {"GitHub"}
+    H₄!() {A!(href → "https://www.github.com/donstenzel") {"GitHub"}}
     H₄!() {A!(href → "https://www.github.com/donstenzel/html.ua") {"Source"}}
   }
 }
