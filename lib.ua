@@ -197,208 +197,107 @@ Tag!Video
   
   # html ? uiua-html | string
   Render ← |1 (
-    ⍣(°A
-      ⍩(Inline!"a")
-    | °Abbr
-      ⍩(Inline!"abbr")
-    | °Address
-      ⍩(Expand!"address")
-    | °Area
-      ⍩(Expand!"area")
-    | °Article
-      ⍩(Expand!"article")
-    | °Aside
-      ⍩(Expand!"aside")
-    | °Audio
-      ⍩(Simple!"audio")
-    | °B
-      ⍩(Inline!"b")
-    | °Base
-      ⍩(Simple!"base")
-    | °Blockquote
-      ⍩(Expand!"base")
-    | °Body
-      ⍩(Expand!"body")
-    | °Break
-      ⍩(Simple!"br")
-    | °Button
-      ⍩(Simple!"button")
-    | °Canvas
-      ⍩(Simple!"canvas")
-    | °Caption
-      ⍩(Simple!"caption")
-    | °Cite
-      ⍩(Simple!"cite")
-    | °Code
-      ⍩(Expand!"code")
-    | °Col
-      ⍩(Simple!"col")
-    | °Colgroup
-      ⍩(Expand!"colgroup")
-    | °Data
-      ⍩(Expand!"data")
-    | °DD
-      ⍩(Simple!"dd")
-    | °Del
-      ⍩(Inline!"del")
-    | °Details
-      ⍩(Expand!"details")
-    | °Dfn
-      ⍩(Inline!"dfn")
-    | °Dialog
-      ⍩(Expand!"dialog")
-    | °Div
-      ⍩(Expand!"div")
-    | °DL
-      ⍩(Expand!"dl")
-    | °DT
-      ⍩(Simple!"dt")
-    | °Em
-      ⍩(Inline!"em")
-    | °Embed
-      ⍩(Simple!"embed")
-    | °Fieldset
-      ⍩(Expand!"fieldset")
-    | °Figcaption
-      ⍩(Simple!"figcaption")
-    | °Figure
-      ⍩(Expand!"figure")
-    | °Footer
-      ⍩(Expand!"footer")
-    | °Form
-      ⍩(Expand!"form")
-    | °H₁
-      ⍩(Simple!"h1")
-    | °H₂
-      ⍩(Simple!"h2")
-    | °H₃
-      ⍩(Simple!"h3")
-    | °H₄
-      ⍩(Simple!"h4")
-    | °H₅
-      ⍩(Simple!"h5")
-    | °H₆
-      ⍩(Simple!"h6")
-    | °Head
-      ⍩(Expand!"head")
-    | °Header
-      ⍩(Expand!"header")
-    | °HR
-      ⍩(Inline!"hr")
-    | °Html
-      ⍩($"<!DOCTYPE html>\n_" Expand!"html")
-    | °I
-      ⍩(Inline!"i")
-    | °IFrame
-      ⍩(Expand!"iframe")
-    | °Img
-      ⍩(Simple!"img")
-    | °Input
-      ⍩(Simple!"input")
-    | °Ins
-      ⍩(Expand!"ins")
-    | °Kbd
-      ⍩(Simple!"kbd")
-    | °Label
-      ⍩(Simple!"label")
-    | °Legend
-      ⍩(Simple!"legend")
-    | °LI
-      ⍩(Simple!"li")
-    | °Link
-      ⍩(Simple!"link")
-    | °Main
-      ⍩(Expand!"main")
-    | °Map
-      ⍩(Expand!"map")
-    | °Mark
-      ⍩(Inline!"mark")
-    | °Menu
-      ⍩(Expand!"menu")
-    | °Meta
-      ⍩(Expand!"meta")
-    | °Meter
-      ⍩(Simple!"meter")
-    | °Nav
-      ⍩(Simple!"nav")
-    | °OL
-      ⍩(Expand!"ol")
-    | °Optgroup
-      ⍩(Expand!"optgroup")
-    | °Option
-      ⍩(Simple!"option")
-    | °Output
-      ⍩(Simple!"output")
-    | °P
-      ⍩(Expand!"p")
-    | °Picture
-      ⍩(Simple!"picture")
-    | °Pre
-      ⍩(Expand!"pre")
-    | °Q
-      ⍩(Inline!"q")
-    | °S
-      ⍩(Inline!"s")
-    | °Sample
-      ⍩(Expand!"samp")
-    | °Script
-      ⍩(Expand!"script")
-    | °Search
-      ⍩(Expand!"search")
-    | °Section
-      ⍩(Expand!"section")
-    | °Select
-      ⍩(Expand!"select")
-    | °Small
-      ⍩(Expand!"small")
-    | °Source
-      ⍩(Expand!"source")
-    | °Span
-      ⍩(Simple!"span")
-    | °Strong
-      ⍩(Expand!"strong")
-    | °Style
-      ⍩(Expand!"style")
-    | °Sub
-      ⍩(Inline!"sub")
-    | °Summary
-      ⍩(Expand!"summary")
-    | °Sub
-      ⍩(Inline!"sub")
-    | °Svg
-      ⍩(Simple!"svg")
-    | °Table
-      ⍩(Expand!"table")
-    | °TBody
-      ⍩(Expand!"tbody")
-    | °TD
-      ⍩(Simple!"td")
-    | °Template
-      ⍩(Expand!"template")
-    | °Textarea
-      ⍩(Expand!"textarea")
-    | °TFoot
-      ⍩(Expand!"tfoot")
-    | °TH
-      ⍩(Simple!"th")
-    | °THead
-      ⍩(Expand!"thead")
-    | °Time
-      ⍩(Simple!"time")
-    | °Title
-      ⍩(Simple!"title")
-    | °TR
-      ⍩(Expand!"tr")
-    | °Track
-      ⍩(Expand!"track")
-    | °U
-      ⍩(Inline!"u")
-    | °UL
-      ⍩(Expand!"ul")
-    | °Var
-      ⍩(Simple!"var")
-    | °Video
-      ⍩(Simple!"video")
+    ⍣(⍩(Inline!"a") °A
+    | ⍩(Inline!"abbr") °Abbr
+    | ⍩(Expand!"address") °Address
+    | ⍩(Expand!"area") °Area
+    | ⍩(Expand!"article") °Article
+    | ⍩(Expand!"aside") °Aside
+    | ⍩(Simple!"audio") °Audio
+    | ⍩(Inline!"b") °B
+    | ⍩(Simple!"base") °Base
+    | ⍩(Expand!"base") °Blockquote
+    | ⍩(Expand!"body") °Body
+    | ⍩(Simple!"br") °Break
+    | ⍩(Simple!"button") °Button
+    | ⍩(Simple!"canvas") °Canvas
+    | ⍩(Simple!"caption") °Caption
+    | ⍩(Simple!"cite") °Cite
+    | ⍩(Expand!"code") °Code
+    | ⍩(Simple!"col") °Col
+    | ⍩(Expand!"colgroup") °Colgroup
+    | ⍩(Expand!"data") °Data
+    | ⍩(Simple!"dd") °DD
+    | ⍩(Inline!"del") °Del
+    | ⍩(Expand!"details") °Details
+    | ⍩(Inline!"dfn") °Dfn
+    | ⍩(Expand!"dialog") °Dialog
+    | ⍩(Expand!"div") °Div
+    | ⍩(Expand!"dl") °DL
+    | ⍩(Simple!"dt") °DT
+    | ⍩(Inline!"em") °Em
+    | ⍩(Simple!"embed") °Embed
+    | ⍩(Expand!"fieldset") °Fieldset
+    | ⍩(Simple!"figcaption") °Figcaption
+    | ⍩(Expand!"figure") °Figure
+    | ⍩(Expand!"footer") °Footer
+    | ⍩(Expand!"form") °Form
+    | ⍩(Simple!"h1") °H₁
+    | ⍩(Simple!"h2") °H₂
+    | ⍩(Simple!"h3") °H₃
+    | ⍩(Simple!"h4") °H₄
+    | ⍩(Simple!"h5") °H₅
+    | ⍩(Simple!"h6") °H₆
+    | ⍩(Expand!"head") °Head
+    | ⍩(Expand!"header") °Header
+    | ⍩(Inline!"hr") °HR
+    | ⍩($"<!DOCTYPE html>\n_" Expand!"html") °Html
+    | ⍩(Inline!"i") °I
+    | ⍩(Expand!"iframe") °IFrame
+    | ⍩(Simple!"img") °Img
+    | ⍩(Simple!"input") °Input
+    | ⍩(Expand!"ins") °Ins
+    | ⍩(Simple!"kbd") °Kbd
+    | ⍩(Simple!"label") °Label
+    | ⍩(Simple!"legend") °Legend
+    | ⍩(Simple!"li") °LI
+    | ⍩(Simple!"link") °Link
+    | ⍩(Expand!"main") °Main
+    | ⍩(Expand!"map") °Map
+    | ⍩(Inline!"mark") °Mark
+    | ⍩(Expand!"menu") °Menu
+    | ⍩(Expand!"meta") °Meta
+    | ⍩(Simple!"meter") °Meter
+    | ⍩(Simple!"nav") °Nav
+    | ⍩(Expand!"ol") °OL
+    | ⍩(Expand!"optgroup") °Optgroup
+    | ⍩(Simple!"option") °Option
+    | ⍩(Simple!"output") °Output
+    | ⍩(Expand!"p") °P
+    | ⍩(Simple!"picture") °Picture
+    | ⍩(Expand!"pre") °Pre
+    | ⍩(Inline!"q") °Q
+    | ⍩(Inline!"s") °S
+    | ⍩(Expand!"samp") °Sample
+    | ⍩(Expand!"script") °Script
+    | ⍩(Expand!"search") °Search
+    | ⍩(Expand!"section") °Section
+    | ⍩(Expand!"select") °Select
+    | ⍩(Expand!"small") °Small
+    | ⍩(Expand!"source") °Source
+    | ⍩(Simple!"span") °Span
+    | ⍩(Expand!"strong") °Strong
+    | ⍩(Expand!"style") °Style
+    | ⍩(Inline!"sub") °Sub
+    | ⍩(Expand!"summary") °Summary
+    | ⍩(Inline!"sub") °Sub
+    | ⍩(Simple!"svg") °Svg
+    | ⍩(Expand!"table") °Table
+    | ⍩(Expand!"tbody") °TBody
+    | ⍩(Simple!"td") °TD
+    | ⍩(Expand!"template") °Template
+    | ⍩(Expand!"textarea") °Textarea
+    | ⍩(Expand!"tfoot") °TFoot
+    | ⍩(Simple!"th") °TH
+    | ⍩(Expand!"thead") °THead
+    | ⍩(Simple!"time") °Time
+    | ⍩(Simple!"title") °Title
+    | ⍩(Expand!"tr") °TR
+    | ⍩(Expand!"track") °Track
+    | ⍩(Inline!"u") °U
+    | ⍩(Expand!"ul") °UL
+    | ⍩(Simple!"var") °Var
+    | ⍩(Simple!"video") °Video
     | ⍩Sanitize °$"_"
     | ⍩⍤.$"Invalid data: _"
     )
