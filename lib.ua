@@ -43,9 +43,8 @@ Tag! ←^ (
   $$   # Creates a new element of type _.
   $$   # _!(Attrs){Content}
   $$ └─╴
-  $$ _! ←^ ⍚(
-  $$   ⌝⊝ ", "
-  $$   ⍚°$"\_ → \"\_\""
+  $$ _! ←^ (
+  $$   ⍣⍚°$"\_ → \"\_\""({}{})
   $$   $"_ map \_ \_"
   $$ )
 )
@@ -157,16 +156,22 @@ Tag!Video
   # Contains various functions to interact
   # with objects from Tag!-generated Html modules
 
+  AttrMap ← map °⊟ ⍉ [{"∘" "id"} {"⊛" "class"}]
   # Formats the attribute map into html conformant syntax.
-  FormatAttributes ↚ ⨬∘(⊂@\s)⊸(>0⧻) ⊝ @\s ⍚$"_=\"_\"" °map
-  FmtAttrs         ↚ FormatAttributes
-
+  FormatAttributes ↚ (
+    °map
+    ≡⍣get∘ :¤AttrMap
+    ⍚$"_=\"_\""
+    ⊝ @\s
+    ⨬∘(⊂@\s)⊸(>0⧻))
+  FmtAttrs ↚ FormatAttributes
+  
   # Escapes certain characters for html.
   Sanitize ← (
     Replace @& "&amp;"
     Replace @< "&lt;"
     Replace @> "&gt;")
-
+  
   # Creates a tag that is placed on newlines and also places
   # its content on newlines.
   Expand! ←^ ⍚(
@@ -174,7 +179,7 @@ Tag!Video
     $$ ⊓FmtAttrs(Indent /◇⊂ ⍚Render)
     $$ $"\n<_\_>\n\_\n</_>\n"
   )
-
+  
   # Creates a tag that is placed on newlines but inlines
   # its content.
   Simple! ←^ ⍚(
@@ -182,14 +187,14 @@ Tag!Video
     $$ ⊓FmtAttrs(⊝@\n ⍚Render)
     $$ $"\n<_\_>\_</_>\n"
   )
-
+  
   # Creates a tag that is inlined.
   Inline! ←^ ⍚(
     ⟜∘ °$"\"_\""
     $$ ⊓FmtAttrs(⊝@\n ⍚Render)
     $$ $"<_\_>\_</_>"
-  ) # 
-
+  )
+  
   # html ? uiua-html | string
   Render ← |1 (
     ⍣(°A
@@ -326,6 +331,74 @@ Tag!Video
       ⍩(Simple!"output")
     | °P
       ⍩(Expand!"p")
+    | °Picture
+      ⍩(Simple!"picture")
+    | °Pre
+      ⍩(Expand!"pre")
+    | °Q
+      ⍩(Inline!"q")
+    | °S
+      ⍩(Inline!"s")
+    | °Sample
+      ⍩(Expand!"samp")
+    | °Script
+      ⍩(Expand!"script")
+    | °Search
+      ⍩(Expand!"search")
+    | °Section
+      ⍩(Expand!"section")
+    | °Select
+      ⍩(Expand!"select")
+    | °Small
+      ⍩(Expand!"small")
+    | °Source
+      ⍩(Expand!"source")
+    | °Span
+      ⍩(Simple!"span")
+    | °Strong
+      ⍩(Expand!"strong")
+    | °Style
+      ⍩(Expand!"style")
+    | °Sub
+      ⍩(Inline!"sub")
+    | °Summary
+      ⍩(Expand!"summary")
+    | °Sub
+      ⍩(Inline!"sub")
+    | °Svg
+      ⍩(Simple!"svg")
+    | °Table
+      ⍩(Expand!"table")
+    | °TBody
+      ⍩(Expand!"tbody")
+    | °TD
+      ⍩(Simple!"td")
+    | °Template
+      ⍩(Expand!"template")
+    | °Textarea
+      ⍩(Expand!"textarea")
+    | °TFoot
+      ⍩(Expand!"tfoot")
+    | °TH
+      ⍩(Simple!"th")
+    | °THead
+      ⍩(Expand!"thead")
+    | °Time
+      ⍩(Simple!"time")
+    | °Title
+      ⍩(Simple!"title")
+    | °TR
+      ⍩(Expand!"tr")
+    | °Track
+      ⍩(Expand!"track")
+    | °U
+      ⍩(Inline!"u")
+    | °UL
+      ⍩(Expand!"ul")
+    | °Var
+      ⍩(Simple!"var")
+    | °Video
+      ⍩(Simple!"video")
     | ⍩Sanitize °$"_"
     | ⍩⍤.$"Invalid data: _"
     )

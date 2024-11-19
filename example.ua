@@ -1,8 +1,13 @@
 #!/usr/bin/env -S uiua run
 # Experimental!
-~ "html.ua" ~ A! Code! Div! HTML Html! H₁! H₂! H₃! H₄! P!
+~ "lib" ~ A! Code! Div! HTML Html! H₁! H₂! H₃! H₄! P! Sample! Style!
 
 Html!() {
+  Style!() {
+    $ a.showcase {
+    $   font-family: "Maple Mono", sans-serif;
+    $ }
+  }
   H₁!() {"Uiua HTML Generation"}
   Div!() {
     H₃!() {"Overview"}
@@ -23,7 +28,7 @@ Html!() {
         $ }
       }
       $ This would then be turned into:
-      Code!() {
+      Sample!() {
         $ <!DOCTYPE html>
         $ 
         $ <html>
@@ -45,16 +50,24 @@ Html!() {
       $ while the curly braces are used for the content.
       $ 
       $ Attributes are formatted like
-      Code!() {"Name₁ → \"Value₁\", Name₂ → \"Value₂\"..."}
+      Code!() {"Name₁ → \"Value₁\""}
       $ where Name and Value can be changed as necessary.
-      $ No trailing whitespace or commas are allowed.
-      $ Note that whitespace is important.
+      $ Note that whitespace around the arrow is important.
+      $ Multiple attributes are seperated like regular Uiua functions.
     }
   }
   Div!() {
     H₃!() {"Check this stuff out!"}
-    H₄!() {A!(href → "https://www.github.com/donstenzel") {"GitHub"}}
-    H₄!() {A!(href → "https://www.github.com/donstenzel/html.ua") {"Source"}}
+    H₄!() {
+      A!(
+        href → "https://www.github.com/donstenzel/html.ua"
+      | ⊛ → "showcase"
+      ) {"Source code!"}}
+    H₄!() {
+      A!(
+        href → "https://www.github.com/donstenzel"
+      | ⊛ → "showcase"
+      ) {"GitHub!"}}
   }
 }
 
