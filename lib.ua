@@ -6,10 +6,6 @@
 Join ← ⌅(⍣/◇$"___"⋅""|⊜□¬⊸⦷)
 ⊝    ← Join
 
-# Like under, but undoes with different context.
-# ⌝F ⊙F : F|2.1
-Around! ← ⌝^0⊙^0
-
 # Replaces occurences of `x` with `y` in `S`
 # replaced ? x y S
 Replace ← ⍜⊜∘⊞⋅∘⊸⦷⊙:
@@ -25,7 +21,7 @@ Indent ← IndentBy "  "
 # Extracts contens of a single curly brace pair
 # and returns a string with an underscore in its place.
 # {format-str expression} ? string
-Extract ← ⍣({: ⊙($"_\__"):°$"_{_}_"}|∘)
+Extract ← ⍣{: ⊙($"_\__"):°$"_{_}_"}∘
 
 # Extracts all segments within curly braces and replaces
 # them with underscores, returning the string and each segment.

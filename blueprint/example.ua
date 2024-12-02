@@ -1,6 +1,6 @@
 #!/usr/bin/env -S uiua run
 # Experimental!
-~ "lib" ~ A! Code! Div! HTML Html! H₁! H₂! H₃! H₄! P! Sample! Style!
+~ "../lib" ~ A! Code! Div! HTML Html! H₁! H₂! H₃! H₄! P! Sample! Style!
 
 Html!() {
   Style!() {
@@ -17,7 +17,7 @@ Html!() {
     }
     P!(style → "white-space: pre; line-height: 1") {
       $ An example could look like:
-      Code!() {
+      Code!(style → "font-family: Uiua386") {
         $ Html!() {
         $   H₁!() {"Level 1.1"}
         $   Div!(style → "line-height: 1") {
@@ -71,4 +71,4 @@ Html!() {
   }
 }
 
-⍜&fras⋅(HTML~Render) "example.html"
+HTML~Render
