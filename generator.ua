@@ -1,7 +1,5 @@
 # Experimental!
-~ "lib" ~ Replace
-
-Uiua ← ⋅⊙◌ &runc {"uiua" "run" ∘}
+~ "lib" ~ Replace Uiua
 
 FilesRecursive ← |1 (
   ⊕□⊸≡&fif &fld
@@ -34,6 +32,3 @@ Generate ← (
     &fwa                  # write
   ) ◌                     # ignore empty output
 )
-
-# MakeSkel
-# Generate

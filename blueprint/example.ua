@@ -1,6 +1,6 @@
 #!/usr/bin/env -S uiua run
 # Experimental!
-~ "../lib" ~ A! Code! Div! HTML Html! H₁! H₂! H₃! H₄! P! Sample! Style!
+~ "../html" ~ A! Code! Div! Html! H₁! H₂! H₃! H₄! P! Render Sample! Style!
 
 Html!() {
   Style!() {
@@ -71,4 +71,4 @@ Html!() {
   }
 }
 
-HTML~Render
+Render

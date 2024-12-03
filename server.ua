@@ -1,11 +1,13 @@
 # Experimental!
 ~ "generator" ~ Generate MakeSkel
 
-GetExt       ← ↘+₁⊚⊸⌕@.
+GetExt ← ⍜⇌(▽¬\↥⊸⌕@.)
+
 SpecialMimes ← °⊟⍉[
   {"js" "text/javascript"}
   {"wasm" "application/wasm"}
 ]
+
 ExtMime ← (
   □GetExt
   SpecialMimes
@@ -25,23 +27,27 @@ Response ← (
 
 HandleRequest ← ⍣(
   Response "200 OK" "text/html" &frab "root/index.html" °"root/"
-| ExtMime ⟜&frab
-  Response "200 OK"
-| Response "404 Not Found" "text/plain" utf₈"Not Found" ◌
+| Response "200 OK" "text/plain" utf₈"Server is stopping." °"root/stop"
+| Response "200 OK" ⊃ExtMime &frab
+| Response "404 Not Found" "text/plain" utf₈"Not Found!" ◌
 ) ⊂"root"
 
-Respond ← ◌pool(
+Respond ← recv pool(
   &p$"Request by _" ⊸&tcpaddr
   °□⊡₁ ⊜□⊸≠@\s ⊸&ru "\r\n\r\n"
   &p⊸$"Path is root_"
   HandleRequest
+  send0⊸(¬/↥⌕"Server is stopping."°utf₈)
   &p$"Response is _ bytes."⊸⧻
   ⊃⋅&cl&w
 )
 
 Server ← &tcpl "0.0.0.0:8000"
 
-MakeSkel
-Generate
+# print error and continue
+# 1 ? error
+E ← 1 &p$$ Failed to respond!
+        $$ _
 
-⍢(⍣Respond⋅&p &tcpa Server)1
+Run ← ⍢(|⍣Respond⋅E &tcpa Server) Generate MakeSkel
+Run

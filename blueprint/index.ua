@@ -1,5 +1,5 @@
 # Experimental!
-~ "../lib" ~ A! Div! HTML Html! H₁! H₂! P!
+~ "../html" ~ A! Div! Html! H₁! H₂! P! Render
 
 Html!() {
   H₁!() {"My personal website!"}
@@ -13,4 +13,4 @@ Html!() {
   }
 }
 
-HTML~Render
+Render
