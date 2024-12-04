@@ -28,7 +28,7 @@ Response ← (
 HandleRequest ← ⍣(
   Response "200 OK" "text/html" &frab "root/index.html" °"root/"
 | Response "200 OK" "text/plain" utf₈"Server is stopping." °"root/stop"
-| Response "200 OK" ⊃ExtMime &frab
+| Response "200 OK" ⊃ExtMime&frab
 | Response "404 Not Found" "text/plain" utf₈"Not Found!" ◌
 ) ⊂"root"
 
@@ -49,5 +49,6 @@ Server ← &tcpl "0.0.0.0:8000"
 E ← 1 &p$$ Failed to respond!
         $$ _
 
-Run ← ⍢(|⍣Respond⋅E &tcpa Server) Generate MakeSkel
+Run ← ⍢(|⍣Respond⋅E&tcpa Server)
+Generate MakeSkel
 Run

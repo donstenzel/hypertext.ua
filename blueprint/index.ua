@@ -1,7 +1,10 @@
 # Experimental!
-~ "../html" ~ A! Div! Html! H₁! H₂! P! Render
+~ "../html" ~ A! Div! Head! Html! H₁! H₂! Meta! P! Render
 
 Html!() {
+  Head!() {
+    Meta!(charset → "UTF-8") {}
+  }
   H₁!() {"My personal website!"}
   Div!() {
     P!() {

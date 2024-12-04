@@ -224,7 +224,7 @@ Render ← |1 (
   | ⍩(Expand!"map") °Map
   | ⍩(Inline!"mark") °Mark
   | ⍩(Expand!"menu") °Menu
-  | ⍩(Expand!"meta") °Meta
+  | ⍩(Inline!"meta") °Meta
   | ⍩(Simple!"meter") °Meter
   | ⍩(Simple!"nav") °Nav
   | ⍩(Expand!"ol") °OL

@@ -1,8 +1,11 @@
 #!/usr/bin/env -S uiua run
 # Experimental!
-~ "../html" ~ A! Code! Div! Html! H₁! H₂! H₃! H₄! P! Render Sample! Style!
+~ "../html" ~ A! Code! Div! Head! Html! H₁! H₂! H₃! H₄! Meta! P! Render Sample! Style!
 
 Html!() {
+  Head!() {
+    Meta!(charset → "UTF-8") {}
+  }
   Style!() {
     $ a.showcase {
     $   font-family: "Maple Mono", sans-serif;
