@@ -1,5 +1,5 @@
 # Experimental!
-~ "lib" ~ IndentBy Replace ⊝
+~ "fns" ~ IndentBy Replace ⊝
 
 # Indents each line in `text` by 2 spaces.
 # indented ? text
@@ -7,15 +7,12 @@ Indent ← IndentBy "  "
 
 # Creates a module and macro for html tags.
 Tag! ←^ (
-  ⟜⟜⟜⟜⟜∘ °□₁
-  $$ ┌─╴_
-  $$   ~{Attributes Content Type ← "_"}
-  $$   # Creates a new element of type _.
-  $$   # _!(Attrs){Content}
-  $$ └─╴
+  ⟜⟜⟜⟜∘ °□₁
+  $$ ~_{Type ← "_" | Attributes | Content}
+  $$ # Creates a new element of type _.
   $$ _! ←^ (
   $$   ⍣⍚°$"\_ → \"\_\""({}{})
-  $$   $"_ map \_ \_"
+  $$   $"_ map \_ \_" ∩repr
   $$ )
 )
 
@@ -122,14 +119,14 @@ Tag!UL
 Tag!Var
 Tag!Video
 
-# Contains various functions to interact
-# with objects from Tag!-generated Html modules
+# Contains some uiua symbols which get formatted
+# from their attribute name, to unformat them later
+SpecialNames ← map °⊟ ⍉ [{"∘" "id"} {"⊛" "class"}]
 
-AttrMap ← map °⊟ ⍉ [{"∘" "id"} {"⊛" "class"}]
 # Formats the attribute map into html conformant syntax.
 FmtAttrs ← (
   °map
-  ≡⍣get∘ :¤AttrMap
+  ≡⍣get∘ :¤SpecialNames
   ⍚$"_=\"_\""
   ⊝ @\s
   ⨬∘(⊂@\s)⊸(>0⧻))

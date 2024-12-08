@@ -1,5 +1,5 @@
 # Experimental!
-~ "../html" ~ A! Div! Head! Html! H₁! H₂! Meta! P! Render
+~ "html" ~ A! Div! Head! Html! H₁! H₂! Meta! P! Render
 
 Html!() {
   Head!() {
@@ -10,7 +10,7 @@ Html!() {
     P!() {
       $ This website is generated from a small library
       $ called 
-      A!(href → "/example.html") {"html.ua"}
+      A!(href → "/p/example.ua") {"hypertext.ua"}
       $ !
     }
   }

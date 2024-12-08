@@ -1,5 +1,5 @@
 # Experimental!
-~ "lib" ~ Replace Uiua
+~ "fns" ~ LoadPage Replace Uiua
 
 FilesRecursive ← |1 (
   ⊕□⊸≡&fif &fld
@@ -24,9 +24,7 @@ MakeSkel ← (
 Generate ← (
   FilesRecursive IN
   ⍚⍣(
-    ⊸Uiua                 # interpret file
-    Replace "\\n" "\n"    # unescape newlines
-    °$"\"_\"\n"           # revert stdout formatting
+    ⊸LoadPage             # interpret file
     ⊂OUT⌝⊂IN:             # change path root folder
     Replace ".ua" ".html" # change file extension
     &fwa                  # write

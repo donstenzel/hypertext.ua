@@ -1,4 +1,3 @@
-#!/usr/bin/env -S uiua run
 # Experimental!
 ~ "../html" ~ A! Code! Div! Head! Html! H₁! H₂! H₃! H₄! Meta! P! Render Sample! Style!
 
