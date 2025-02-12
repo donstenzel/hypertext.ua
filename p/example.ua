@@ -1,76 +1,67 @@
-# Experimental!
-~ "../html" ~ A! Code! Div! Head! Html! H₁! H₂! H₃! H₄! Meta! P! Render Sample! Style!
+~ "../html" ~ A Code Div Escape Head Html H₁ H₂ H₃ H₄ Meta P Sample Style UiuaCode
 
-Html!() {
-  Head!() {
-    Meta!(charset → "UTF-8") {}
-  }
-  Style!() {
-    $ a.showcase {
-    $   font-family: "Maple Mono", sans-serif;
-    $ }
-  }
-  H₁!() {"Uiua HTML Generation"}
-  Div!() {
-    H₃!() {"Overview"}
-    P!(style → "white-space: pre") {
-      $ This library allows you to write html using uiua code.
-      $ You can easily create static pages with this.
-    }
-    P!(style → "white-space: pre; line-height: 1") {
+&p Html {
+  Head ⬚∘Meta [{"charset" "UTF-8"}] {}
+
+  ⬚∘H₁ [{"style" "text-align: center;"}] "Uiua HTML Generation"
+  Div {
+    ⬚∘H₃ [{"style" "text-align: center;"}] "Overview"
+  
+    ⬚∘P [{"style" "white-space: pre;"}]
+    $ This library allows you to write html using uiua code.
+    $ You can easily create static pages with this.
+  
+    ⬚∘P [{"style" "white-space: pre; line-height: 1"}] {
       $ An example could look like:
-      Code!(style → "font-family: Uiua386") {
-        $ Html!() {
-        $   H₁!() {"Level 1.1"}
-        $   Div!(style → "line-height: 1") {
-        $     H₂!() {"Level 2.1"}
-        $     H₂!() {"Level 2.2"}
-        $   }
-        $   H₁!() {"Level 1.2"}
-        $ }
-      }
-      $ This would then be turned into:
-      Sample!() {
-        $ <!DOCTYPE html>
-        $ 
-        $ <html>
-        $   <h1>Level 1.1</h1>
-        $   <div style="line-height: 1">
-        $     <h2>Level 2.1</h2>
-        $     <h2>Level 2.2</h2>
-        $   </div>
-        $   <h1>Level 1.2</h1>
-        $ </html>
-      }
-      $ Note that the contents of each tag are entirely up to you.
-      $ They can be regular strings or other tags that are implemented.
+      UiuaCode
+      $ &p Html {
+      $   Head ⬚∘Meta [{"charset" "UTF-8"}] {}
+      $   
+      $   H₁ □"Uiua website"
+      $   Div P {
+      $     $ This website is generated from a small library called
+      $     ⬚∘A [{"href" "/p/example.ua"}] "hypertext.ua!"
+      $   }
+      $ }
+    
+      $ This would then emit:
+      Sample Escape
+      $ <html>
+      $   <head>
+      $     <meta charset="UTF-8">
+      $   </head>
+      $   <h1>
+      $     Uiua website
+      $   </h1>
+      $   <div>
+      $     <p>
+      $       This website is generated from a small library called
+      $       <a href="/p/example.ua">
+      $         hypertext.ua!
+      $       </a>
+      $     </p>
+      $   </div>
+      $ </html>
     }
-    P!(style → "white-space: pre") {
-      $ In any given tag like:
-      Code!() {"Html!(...) {...}"}
-      $ the parentheses can be used to set attributes,
-      $ while the curly braces are used for the content.
-      $ 
-      $ Attributes are formatted like
-      Code!() {"Name₁ → \"Value₁\""}
-      $ where Name and Value can be changed as necessary.
-      $ Note that whitespace around the arrow is important.
-      $ Multiple attributes are seperated like regular Uiua functions.
+  
+    ⬚∘P [{"style" "white-space: pre"}]
+    $ Note that the contents of each tag are entirely up to you.
+    $ They can be regular strings or a list of other tags that are implemented.
+    $ It is important to note that tags are turned into html eagerly.
+  
+    ⬚∘P [{"style" "white-space: pre"}] {
+      $ Attributes are supplied by setting a fill value on a tag.
+      $ This can be used with Identity to get the usual order of things:
+      UiuaCode $ ⬚∘Tag [{"attribute" "value"} ...] { Content }
+    
+      $ You can easily create simple custom tags like the UiuaCode tag inside the
+      $ library. It automatically applies the Uiua386 font to a code block,
+      $ while still allowing further attributes.
     }
   }
-  Div!() {
-    H₃!() {"Check this stuff out!"}
-    H₄!() {
-      A!(
-        href → "https://www.github.com/donstenzel/html.ua"
-      | ⊛ → "showcase"
-      ) {"Source code!"}}
-    H₄!() {
-      A!(
-        href → "https://www.github.com/donstenzel"
-      | ⊛ → "showcase"
-      ) {"GitHub!"}}
+  ⬚∘Div [{"style" "text-align: center;"}] {
+    H₃ "Check this stuff out!"
+    H₄ ⬚∘A [{"href" "https://www.github.com/donstenzel/html.ua"}] "Source code!"
+    H₄ ⬚∘A [{"href" "https://www.github.com/donstenzel"}] "GitHub!"
   }
 }
-
-Render
