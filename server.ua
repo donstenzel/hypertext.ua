@@ -1,28 +1,55 @@
-~ "utils" ~ Eval Uiua
+# Experimental!
+~ "http" ~ Request Response
 
-Extension ← ⍜⇌(▽¬\↥⊸⌕@.)
-
-SpecialMimes ← °⊟⍉[
-  {"js" "text/javascript"}
-  {"wasm" "application/wasm"}
-]
-
-ExtMime ← (
-  SpecialMimes □Extension
-  ⍣(⊓(°□⊢)◌|◇⊂"text/"◌) ˜▽⊙⊸˜⌕:
-)
-
-Path ← ◇∘⊡₁ ⊜□⊸≠@\s &ru"\r\n\r\n"
-
-Respond! ← ◌pool(
-  &p$"Request by _" &tcpaddr ⟜⊸Path
-  &p$"Path is _" ⟜^0
-  &p$"Response is _ bytes.\n" ⊃⊓⧻&cl&w
+Respond‼ ← ◌pool(
+  &p$"Request by _" &tcpaddr ⟜⊸Request
+  &p⊃$"Method: _\nPath: _"⍣^0⋅⋅⋅^1
+  ⊃⊓⧻&cl&w Response
+  &p$"Response is _ bytes\n"
 )
 
 E ← &p$"[Error] _\n"
 
-Run! ← (
+Run‼ ← (
   &tcpl "0.0.0.0:8000"
-  ⍢(⍣Respond!^0⋅E &tcpa)1
+  ⍢(⍣Respond‼^0^1⋅E &tcpa)1
 )
+
+# this code is deranged
+
+# files ? directory
+Files ↚ |1 /◇⊂⍚(⨬Files□⊸&fif) &fld
+
+# bound-names ? path
+Bindings ↚ (
+  ⊸≠@\n&fras
+  ⊜⍣(⊓□◌°$"_ ← _"|□"")
+  ▽±⊸≡◇⧻
+)
+
+# import-str ? mod-name path
+Import ↚ $"_ ~ \"_\""
+
+# route-str ? function mod-name path
+Route ↚ $"⍩_~_ °(\"_\" \"/_\")"⤙⟜⊙◌
+
+Routes ↚ $$ FileRoutes ← ⍣(
+         $$   _
+         $$ | ⍩⍤"Invalid route."0
+         $$ )
+
+# sanitized ? file base
+SaneName ↚ ▽⟜⍜⊜□⍚⍜⊢⌵∊+@A⇡26⊸⌵˜⌝⊂°$"_.ua"
+
+Pack ↚ /$"_\n| _"
+
+# Call with directory which contains files with routes to add.
+# Declares `FileRoutes` containing all routes
+MakeRoutes! ←^ ◇(
+  ⍚(⊃(Bindings
+    | ⊃∩¤Import⤚SaneName)
+    Pack⍚Route ▽⊸≡◇(/×>₀±)
+  )⊃Files¤
+  ⊓Pack/$"_\n_" ▽±⊸≡◇⧻
+  ˜$"_\n\n_" Routes
+)⊢

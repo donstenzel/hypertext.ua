@@ -2,9 +2,9 @@
 
 **HYPERTEXT.ua** contains various components to build websites with Uiua.
 
----
+### Library
 
-[`server.ua`](server.ua) is an http server capable of receiving simple requests to 
+[`server.ua`](server.ua) is an http server capable of receiving simple requests to
 different pages.
 
 ```uiua
@@ -38,16 +38,32 @@ Attributes are optionally given via `⬚ fill`, as seen in the example.
 
 ---
 
+[`http.ua`](http.ua) contains request/response and parsing related functions.
+
+
 [`utils.ua`](utils.ua) holds a couple of functions which are used across files,
 or don't really belong to any other component.
 
 
 [`lib.ua`](lib.ua) simply exposes the server, html generation and utils.
 
+### Example site
 
-[`website.ua`](website.ua) contains things specific to the website,
-not intended for outside usage beyond being an example.
+[`website.ua`](website.ua) contains things specific to an example website.
 
 
-[`database.ua`](database.ua) contains table schemas and a helper function
-for pages using the database.
+[`database.ua`](database.ua) contains table schemas and exposes my Uiqlite fork
+for pages using a database. The database used is [chinook.db](https://github.com/lerocha/chinook-database)
+
+[`components.ua`](components.ua) are some custom tags used in the website.
+
+
+### Notes
+
+Paths may be system specific for now, but it should be limited to things
+related to the website example, not the library code.
+
+Some of the macro stuff is kinda insane lol. I think some sort of interface
+system would make this a lot nicer. If each page was just an implementation
+of an interface, the server could just use the relevant functions by loading
+the file as a concretization of the abstract module.

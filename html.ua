@@ -19,21 +19,16 @@ Escape ← (
 Tag ← ⨬(
   $"<__>" ⊙(FmtAttrs ⍣°◌[])
 | ⤚⊙⊓(FmtAttrs ⍣°◌[]|FmtContent)
-  $$ 
-  $$ <__>_</_>
-  $$ 
+  $"<__>_</_>"
 | ⤚⊙⊓(FmtAttrs ⍣°◌[]|IndentBy "  " FmtContent)
-  $$ 
-  $$ <__>
-  $$ _
-  $$ </_>
-  $$ 
+  $"<__>\n_\n</_>"
 )↧₂◡⋅⧻
 
 T! ←^ ⍚$"⬚⍣°◌[]Tag _"
 
 A      ← T!"a"
 Body   ← T!"body"
+Button ← T!"button"
 Code   ← T!"code"
 Div    ← T!"div"
 Form   ← T!"form"
@@ -47,10 +42,10 @@ Input  ← T!"input"
 LI     ← T!"li"
 Link   ← T!"link"
 Meta   ← T!"meta"
+Option ← T!"option"
 P      ← T!"p"
 Sample ← T!"sample"
+Select ← T!"select"
 Style  ← T!"style"
 Title  ← T!"title"
 UL     ← T!"ul"
-
-UiuaCode ← ⬚∘Code ⊂⍣°◌[] [{"style" "font-family: Uiua386"}]

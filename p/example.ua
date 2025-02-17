@@ -1,7 +1,13 @@
-~ "../html" ~ A Code Div Escape Head Html H₁ H₂ H₃ H₄ Meta P Sample Style UiuaCode
+~ "../html"
+  ~ A Button Code Div Escape
+  ~ Head Html H₁ H₂ H₃ H₄ 
+  ~ Meta P Sample Style
+~ "../components" ~ HomeButton UiuaCode
 
-&p Html {
+View ← Html {
   Head ⬚∘Meta [{"charset" "UTF-8"}] {}
+
+  HomeButton
 
   ⬚∘H₁ [{"style" "text-align: center;"}] "Uiua HTML Generation"
   Div {
@@ -17,8 +23,8 @@
       $ &p Html {
       $   Head ⬚∘Meta [{"charset" "UTF-8"}] {}
       $   
-      $   H₁ □"Uiua website"
-      $   Div P {
+      $   H₁ "Uiua website"
+      $   Div {
       $     $ This website is generated from a small library called
       $     ⬚∘A [{"href" "/p/example.ua"}] "hypertext.ua!"
       $   }
@@ -34,12 +40,10 @@
       $     Uiua website
       $   </h1>
       $   <div>
-      $     <p>
-      $       This website is generated from a small library called
-      $       <a href="/p/example.ua">
-      $         hypertext.ua!
-      $       </a>
-      $     </p>
+      $     This website is generated from a small library called
+      $     <a href="/p/example.ua">
+      $       hypertext.ua!
+      $     </a>
       $   </div>
       $ </html>
     }
@@ -61,7 +65,9 @@
   }
   ⬚∘Div [{"style" "text-align: center;"}] {
     H₃ "Check this stuff out!"
-    H₄ ⬚∘A [{"href" "https://www.github.com/donstenzel/html.ua"}] "Source code!"
-    H₄ ⬚∘A [{"href" "https://www.github.com/donstenzel"}] "GitHub!"
+    H₄ ⬚∘A [{"href" "https://www.github.com/donstenzel/html.ua"}] "Source code"
+    H₄ ⬚∘A [{"href" "https://www.github.com/donstenzel"}] "My GitHub"
   }
 }
+
+GET ← "200 OK" "text/html" utf₈ ⊂"<!DOCTYPE html>\n" View ◌

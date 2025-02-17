@@ -1,35 +1,29 @@
-~ "server" ~ Run!
-~ "utils" ~ Uiua
+# Experimental!
+~ "server" ~ MakeRoutes! Run‼
 
-# loads an html.ua page into a string
-# and adds <!DOCTYPE html>
-# page-data ? file
-LoadPage ← (
-  ⍜⇌(▽\↥⊸=@>) Uiua
-  ⊂"<!DOCTYPE html>\n"
+# MakeRoutes!(p)
+AocPage ~ "p/aoc-page.ua"
+Index ~ "p/index.ua"
+Example ~ "p/example.ua"
+Albums ~ "p/albums.ua"
+
+FileRoutes ← ⍣(
+  ⍩AocPage~GET °⊓"GET" "/p/aoc-page.ua"
+| ⍩Index~GET °⊓"GET" "/p/index.ua"
+| ⍩Albums~GET °⊓"GET" "/p/albums.ua"
+| ⍩Albums~POST °⊓"POST" "/p/albums.ua"
+| ⍩Example~GET °⊓"GET" "/p/example.ua"
+| ⍩⍤"Invalid route."0
 )
 
-IndexRoute ← "200 OK" "text/html" utf₈ LoadPage "p/index.ua" °"/"
-PageRoute  ← "200 OK" "text/html" utf₈ LoadPage ⌝⊂@/ ⍜°$"/p/_.ua"
-EvalRoute  ← "200 OK" "text/plain" utf₈ Uiua ⌝⊂@/ ⍜°$"/_.ua"
-Route₄₀₄   ← "404 Not Found" "text/plain" utf₈ "Error 404! No route found." ◌
-
-# utf₈-response ? code type utf₈-content
-Response ← (
-  ⊙⊙⊸⧻
-  $$ HTTP/1.1 _
-  $$ Content-Type: _
-  $$ Content-Length: _
-  $$ 
-  $$ 
-  ⊂ utf₈
+Routes ← ⍣(
+  ⍩Index~GET ⋅°"/"
+| ⍩FileRoutes
 )
 
-Routes ← Response ⍣(
-  IndexRoute
-| PageRoute
-| EvalRoute
-| Route₄₀₄
-)
+Handle ← ⨬(
+  "500 Internal Server Error" "text/plain" utf₈
+| "404 Not Found" "text/plain" utf₈"Not Found"
+)⊸≍"Invalid route."
 
-Run!Routes
+Run‼(Routes|Handle)

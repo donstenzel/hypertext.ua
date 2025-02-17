@@ -1,7 +1,7 @@
 # Experimental!
 Uiqlite ~ "../uiqlite/lib" ~ Tables!
+# ~ "utils" ~ Replace
 
+DB ← "chinook.db"
+# this generates some modules for queries
 Tables!"chinook.db"
-
-# executes a uiua style query directly on chinook.db
-Execute! ←^ $"Uiqlite~Execute!(_) \"chinook.db\"" /◇$"_|_"

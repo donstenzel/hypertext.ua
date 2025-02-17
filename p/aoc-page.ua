@@ -1,8 +1,9 @@
 ~ "../html"
   ~ A Body Code Div Escape Head Html
-  ~ H₄ LI Link Meta Title UL UiuaCode
+  ~ H₂ H₄ LI Link Meta Title UL
+~ "../components" ~ HomeButton UiuaCode
 
-&p Html {
+View ← Html {
   Head {
     Title "Advent of Code Solutions"
     ⬚∘Link [
@@ -12,13 +13,19 @@
     ] {}
     ⬚∘Meta [{"charset" "UTF-8"}] {}
   }
+
+  HomeButton
+
   Body {
-    ⬚∘Div [{"style" "white-space: pre"}] {
-      UL ⍚(
-        LI {⊃(H₄ $"Path: _"|UiuaCode Escape &fras)}
-      )
+    ⬚∘H₂ [{"style" "text-align: center;"}]
+    $ Advent of Code 2024 Solutions in Uiua!
+    Div {
+      UL ⍚(LI {⊃(H₄ $"Path: _"|UiuaCode Escape &fras)})
       ▽⊸≡◇(≍".ua"↙₋₃)
+      ⍆
       &fld "/home/bennet/uiua/aoc/2024/"
     }
   }
 }
+
+GET ← "200 OK" "text/html" utf₈ ⊂"<!DOCTYPE html>\n" View ◌
