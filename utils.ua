@@ -11,11 +11,3 @@ Replace ← ⍜⊜∘⊞⋅∘⊸⦷⊙:
 # Indents each line in `text` by `indent`.
 # indented ? indent text
 IndentBy ← ⍜⊙(⌝⊝ @\n)⍚⊂ ¤
-
-# runs the interpreter on `file` and returns the output
-# stdout ? file
-Uiua ← ⋅⊙◌ &runc {"uiua" "run" ∘}
-
-# like `Uiua` but takes source code instead of a path
-# stdout ? code
-Eval ← ⋅⊙◌ &runc {"uiua" "eval" ∘}

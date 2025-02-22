@@ -1,6 +1,8 @@
 # HYPERTEXT.ua
 
-**HYPERTEXT.ua** contains various components to build websites with Uiua.
+**HYPERTEXT.ua** contains various modules to build websites with Uiua.
+
+Note that this is heavily work in progress.
 
 ### Library
 
@@ -13,15 +15,18 @@ different pages.
 
 Routes ← (...)
 
-Server~Run!Routes
+Error ← (...)
+
+Server~Run‼(Routes|Error)
 ```
 
 ---
 
-[`html.ua`](html.ua) contains logic to create HTML documents using Uiua syntax.
-This also allows you to use Uiua code to generate pages based on files and stuff.
+[`html.ua`](html.ua) contains functions to create HTML documents using Uiua code.
+Some example use cases could be a page to show a database table, or creating a page
+for every file in some directory. See [`website.ua`](website.ua) for inspiration.
 
-To get started with this, import `Html` from the library. From there you can
+To get started, import `Html` from the library. From there you can
 use the tags inside the module.
 
 Here's what a random div with a codeblock and a link looks like:
@@ -45,18 +50,17 @@ Attributes are optionally given via `⬚ fill`, as seen in the example.
 or don't really belong to any other component.
 
 
-[`lib.ua`](lib.ua) simply exposes the server, html generation and utils.
+[`lib.ua`](lib.ua) simply exposes the different modules.
 
 ### Example site
 
 [`website.ua`](website.ua) contains things specific to an example website.
-
-
-[`database.ua`](database.ua) contains table schemas and exposes my Uiqlite fork
-for pages using a database. The database used is [chinook.db](https://github.com/lerocha/chinook-database)
+Each route inside of files in [`p`](p) is automatically added with a macro.
 
 [`components.ua`](components.ua) are some custom tags used in the website.
 
+[`database.ua`](database.ua) contains table schemas and exposes my Uiqlite fork
+for pages using a database. The database used is [chinook.db](https://github.com/lerocha/chinook-database)
 
 ### Notes
 

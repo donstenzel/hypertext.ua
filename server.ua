@@ -1,6 +1,5 @@
 # Experimental!
 ~ "http" ~ Request Response
-
 Respond‼ ← ◌pool(
   &p$"Request by _" &tcpaddr ⟜⊸Request
   &p⊃$"Method: _\nPath: _"⍣^0⋅⋅⋅^1
@@ -49,7 +48,7 @@ MakeRoutes! ←^ ◇(
   ⍚(⊃(Bindings
     | ⊃∩¤Import⤚SaneName)
     Pack⍚Route ▽⊸≡◇(/×>₀±)
-  )⊃Files¤
+  )⊃Files¤ °$$ "_"
   ⊓Pack/$"_\n_" ▽±⊸≡◇⧻
   ˜$"_\n\n_" Routes
 )⊢

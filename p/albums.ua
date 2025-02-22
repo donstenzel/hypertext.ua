@@ -4,12 +4,12 @@
   ~ Div Form H₁ H₂ Input
   ~ Head Html Meta
   ~ LI Option Select UL
-~ "../database" ~ Album Artist DB Uiqlite
+~ "../database" ~ Album Artist DB Lib
 ~ "../components" ~ HomeButton
 ~ "../http" ~ ParseQuery
 
 Albums ← (
-  Uiqlite~Query~Values!(
+  Lib!C!Values!(
     ⊂ Album Artist
   | ⊏ Title → Album, Name → Artist
   | ⍆ Title
@@ -17,7 +17,7 @@ Albums ← (
 )
 
 Artists ← (
-  Uiqlite~Query~Values!(
+  Lib!C!Values!(
     ⊡ Artist
   | ⊏ Name, ArtistId
   | ⍆ Name
@@ -26,9 +26,9 @@ Artists ← (
 
 # ? {title artistId}
 AddAlbum ← (
-  Uiqlite~Query~ExecFmt!(
+  Lib!C!ExecFmt!(
     + Album (Title, ArtistId)
-  | ⍚[(’$t’, $a)]
+  | ⍚[($t, $a)]
   ) DB
 )
 
@@ -60,6 +60,7 @@ View ← (
   }
 )
 
+# [ROUTE] ← semantic comment? like a c# attribute
 GET ← "200 OK" "text/html" utf₈ View ◌
 
 POST ← "200 OK" "text/html" utf₈ View AddAlbum get{"Title" "ArtistId"} ParseQuery

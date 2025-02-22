@@ -1,5 +1,5 @@
 # Experimental!
-Extension ← ⍜⇌(▽¬\↥⊸⌕@.)
+Extension ← ⍜⇌(▽¬\↥⊸=@.)
 
 SpecialMimes ← °⊟⍉[
   {"js" "text/javascript"}

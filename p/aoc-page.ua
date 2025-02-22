@@ -21,8 +21,7 @@ View ← Html {
     $ Advent of Code 2024 Solutions in Uiua!
     Div {
       UL ⍚(LI {⊃(H₄ $"Path: _"|UiuaCode Escape &fras)})
-      ▽⊸≡◇(≍".ua"↙₋₃)
-      ⍆
+      ⍆▽⊸≡◇(≍".ua"↙₋₃)
       &fld "/home/bennet/uiua/aoc/2024/"
     }
   }

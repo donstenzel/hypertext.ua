@@ -1,20 +1,8 @@
 # Experimental!
 ~ "server" ~ MakeRoutes! Run‼
 
-# MakeRoutes!(p)
-AocPage ~ "p/aoc-page.ua"
-Index ~ "p/index.ua"
-Example ~ "p/example.ua"
-Albums ~ "p/albums.ua"
-
-FileRoutes ← ⍣(
-  ⍩AocPage~GET °⊓"GET" "/p/aoc-page.ua"
-| ⍩Index~GET °⊓"GET" "/p/index.ua"
-| ⍩Albums~GET °⊓"GET" "/p/albums.ua"
-| ⍩Albums~POST °⊓"POST" "/p/albums.ua"
-| ⍩Example~GET °⊓"GET" "/p/example.ua"
-| ⍩⍤"Invalid route."0
-)
+# this generates routes
+MakeRoutes!"p"
 
 Routes ← ⍣(
   ⍩Index~GET ⋅°"/"
