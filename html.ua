@@ -17,35 +17,42 @@ Escape ← (
 # - anything else → expanded tag
 # html ? name content
 Tag ← ⨬(
-  $"<__>" ⊙(FmtAttrs ⍣°◌[])
-| ⤚⊙⊓(FmtAttrs ⍣°◌[]|FmtContent)
+  ⤚⊙⊓(FmtAttrs ⍣°◌[]|FmtContent)
   $"<__>_</_>"
 | ⤚⊙⊓(FmtAttrs ⍣°◌[]|IndentBy "  " FmtContent)
   $"<__>\n_\n</_>"
-)↧₂◡⋅⧻
+)↥₀-₁↧₂◡⋅⧻
 
-T! ←^ ⍚$"⬚⍣°◌[]Tag _"
+# area base br col embed hr img input link meta source track wbr
+Void ← ˜$"<__>" FmtAttrs
 
-A      ← T!"a"
-Body   ← T!"body"
-Button ← T!"button"
-Code   ← T!"code"
-Div    ← T!"div"
-Form   ← T!"form"
-H₁     ← T!"h1"
-H₂     ← T!"h2"
-H₃     ← T!"h3"
-H₄     ← T!"h4"
-Head   ← T!"head"
-Html   ← T!"html"
-Input  ← T!"input"
-LI     ← T!"li"
-Link   ← T!"link"
-Meta   ← T!"meta"
-Option ← T!"option"
-P      ← T!"p"
-Sample ← T!"sample"
-Select ← T!"select"
-Style  ← T!"style"
-Title  ← T!"title"
-UL     ← T!"ul"
+V! ←^ ⍚$"Void ⍣°◌[] _"
+
+N! ←^ ⍚$"⬚⍣°◌[]Tag _"
+
+A      ← N!"a"
+Body   ← N!"body"
+Br     ← (V!"br")
+Button ← N!"button"
+Code   ← N!"code"
+Div    ← N!"div"
+Form   ← N!"form"
+H₁     ← N!"h1"
+H₂     ← N!"h2"
+H₃     ← N!"h3"
+H₄     ← N!"h4"
+Head   ← N!"head"
+Html   ← N!"html"
+Input  ← N!"input"
+Label  ← N!"label"
+LI     ← N!"li"
+Link   ← (V!"link")
+Meta   ← (V!"meta")
+Option ← N!"option"
+P      ← N!"p"
+Sample ← N!"sample"
+Script ← N!"script"
+Select ← N!"select"
+Style  ← N!"style"
+Title  ← N!"title"
+UL     ← N!"ul"

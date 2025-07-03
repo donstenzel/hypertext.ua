@@ -1,5 +1,5 @@
 # Experimental!
-Lib ~ "../uiqlite/lib" ~ Tables! C!
+Lib ~ "../uiqlite/lib" ~ C! Tables!
 
 DB ← "chinook.db"
 

@@ -1,21 +1,20 @@
 # Experimental!
 Extension ← ⍜⇌(▽¬\↥⊸=@.)
 
-SpecialMimes ← °⊟⍉[
+SpecialMimes ← map°⊟⍉[
   {"js" "text/javascript"}
   {"wasm" "application/wasm"}
 ]
 
 ExtMime ← (
-  SpecialMimes □Extension
-  ⍣(⊓(◇∘⊢)◌|◇⊂"text/"◌) ˜▽⊙⊸˜⌕:
+  ⍣get$"text/_" ⊙SpecialMimes Extension
 )
 
 # method path data ? socket
 Request ← (
   &rs 1e4 # ∞ doesn't work so here's an arbitrary limit instead.
   °$"_ _ HTTP/1.1\r\n_"
-  ⊙⊙(◇∘⊣⊜□¬⊸⦷"\r\n\r\n")
+  ⊙⊙(◌°$"_\r\n\r\n_")
 )
 
 # utf₈-response ? code type utf₈-content
@@ -31,7 +30,7 @@ Response ← (
 
 # decodes url-querystring
 Decode ← ⍜⊜□⍚(
-  °utf₈⧈(°base₁₆⇌⊗⊙HexDigits ¯⌵↘₁)¤¤3
+  °utf₈⧈(°⊥₁₆⇌⊗⊙HexDigits ¯⌵↘₁)¤¤3
 )±⊸⦷"%\W\W" ⍜▽⋅@\s⊸=@+
 
 # constructs a map from form-data

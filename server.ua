@@ -1,7 +1,8 @@
 # Experimental!
 ~ "http" ~ Request Response
+
 Respond‼ ← ◌pool(
-  &p$"Request by _" &tcpaddr ⟜⊸Request
+  &p$"Request by _"⊸⊃&tcpaddr Request
   &p⊃$"Method: _\nPath: _"⍣^0⋅⋅⋅^1
   ⊃⊓⧻&cl&w Response
   &p$"Response is _ bytes\n"
@@ -42,6 +43,8 @@ SaneName ↚ ▽⟜⍜⊜□⍚⍜⊢⌵∊+@A⇡26⊸⌵˜⌝⊂°$"_.ua"
 
 Pack ↚ /$"_\n| _"
 
+# TODO: refine this a little. semantic comment
+# seems the best to me: # Route!
 # Call with directory which contains files with routes to add.
 # Declares `FileRoutes` containing all routes
 MakeRoutes! ←^ ◇(
