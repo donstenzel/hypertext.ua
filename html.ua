@@ -12,9 +12,8 @@ Escape ← (
 
 # use fill value for attributes.
 # behavior based on content:
-# - empty → tag without content
-# - single box → tag with inlined content
-# - anything else → expanded tag
+# - empty or single box → tag with inlined content
+# - more elements → expanded tag
 # html ? name content
 Tag ← ⨬(
   ⤚⊙⊓(FmtAttrs ⍣°◌[]|FmtContent)
@@ -23,7 +22,9 @@ Tag ← ⨬(
   $"<__>\n_\n</_>"
 )↥₀-₁↧₂◡⋅⧻
 
-# area base br col embed hr img input link meta source track wbr
+# void tags: area base br col embed hr img input link meta source track wbr
+
+# html ? attributes name
 Void ← ˜$"<__>" FmtAttrs
 
 V! ←^ ⍚$"Void ⍣°◌[] _"

@@ -15,43 +15,44 @@ Run‼ ← (
   ⍢(⍣Respond‼^0^1⋅E &tcpa)1
 )
 
-# this code is deranged
+# saner version: now with semantic comment!
 
 # files ? directory
-Files ↚ |1 /◇⊂⍚(⨬Files□⊸&fif) &fld
-
-# bound-names ? path
-Bindings ↚ (
-  ⊸≠@\n&fras
-  ⊜⍣(⊓□◌°$"_ ← _"|□"")
-  ▽±⊸≡◇⧻
-)
-
-# import-str ? mod-name path
-Import ↚ $"_ ~ \"_\""
-
-# route-str ? function mod-name path
-Route ↚ $"⍩_~_ °(\"_\" \"/_\")"⤙⟜⊙◌
-
-Routes ↚ $$ FileRoutes ← ⍣(
-         $$   _
-         $$ | ⍩⍤"Invalid route."0
-         $$ )
+Files ↚ ⍥(/◇⊂⍚⨬&fld□⊸≡◇&fif)∞ □₁
 
 # sanitized ? file base
 SaneName ↚ ▽⟜⍜⊜□⍚⍜⊢⌵∊+@A⇡26⊸⌵˜⌝⊂°$"_.ua"
 
-Pack ↚ /$"_\n| _"
+# methods routes fn-names ? source
+Extract ↚ ◌≡°⊟₄ regex $ # Route! (GET|POST) ([a-zA-Z0-9/_]+)
+                      $ (\w+) ←
 
-# TODO: refine this a little. semantic comment
-# seems the best to me: # Route!
-# Call with directory which contains files with routes to add.
-# Declares `FileRoutes` containing all routes
-MakeRoutes! ←^ ◇(
-  ⍚(⊃(Bindings
-    | ⊃∩¤Import⤚SaneName)
-    Pack⍚Route ▽⊸≡◇(/×>₀±)
-  )⊃Files¤ °$$ "_"
-  ⊓Pack/$"_\n_" ▽±⊸≡◇⧻
-  ˜$"_\n\n_" Routes
-)⊢
+# import ? path name
+Import ↚ ˜$"_ ~ \"_\""
+# patterns ? methods routes
+Patterns ↚ ⍚$"⊓°(\"_\"){°($\"_\")}"
+# functions ? names module
+Functions ↚ ⍚⌟˜$"_~_"
+# arms ? pattern function
+Arms ↚ ⍚˜$"⍩_ _"
+# output ? imports routes
+Fin ↚ ˜$$ _
+       $$ 
+       $$ Routes ← ⍣(
+       $$   _
+       $$ )
+
+Make ↚ Fin ⊓/$"_\n| _" /$"_\n_" /◇⊂⍚(
+  ⊃⊓&fras∘Import⟜SaneName
+  Arms ⊓Patterns Functions Extract
+)⊃Files¤
+
+# Call this macro with a string containing the root directory
+# of a site you want to create routes for. Routes are declared
+# by using a semantic comment: `# Route! [method] [route]`.
+# The method must be one of GET or POST as of writing this,
+# the route a string of letters and numbers, separated by
+# slashes with optional underscores as placeholders.
+# Placeholders will match any segment, and their values will be
+# passed to the function. TODO: no placeholder → no empty box array
+Make! ←^ Make ◇°$"\"_\""⊢
