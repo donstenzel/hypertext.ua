@@ -54,13 +54,7 @@ or don't really belong to any other component.
 
 ### Example site
 
-[`website.ua`](website.ua) contains things specific to an example website.
-Each route inside of files in [`p`](p) is automatically added with a macro.
-
-[`components.ua`](components.ua) are some custom tags used in the website.
-
-[`database.ua`](database.ua) contains table schemas and exposes my Uiqlite fork
-for pages using a database. The database used is [chinook.db](https://github.com/lerocha/chinook-database)
+An example site can be found [here](https://github.com/donstenzel/htua-example).
 
 ### Notes
 
