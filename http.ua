@@ -4,6 +4,11 @@ Extension ← ⍜⇌(▽¬\↥⊸=@.)
 SpecialMimes ← map°⊟⍉[
   {"js" "text/javascript"}
   {"wasm" "application/wasm"}
+  {"json" "application/json"}
+  {"png" "image/png"}
+  {"gif" "image/gif"}
+  {"mp4" "video/mp4"}
+  {"ttf" "font/ttf"}
 ]
 
 ExtMime ← (

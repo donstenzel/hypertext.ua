@@ -22,38 +22,87 @@ Tag ← ⨬(
   $"<__>\n_\n</_>"
 )↥₀-₁↧₂◡⋅⧻
 
-# void tags: area base br col embed hr img input link meta source track wbr
+# html ? name attributes
+Void ← $"<__>" ⊙FmtAttrs
 
-# html ? attributes name
-Void ← ˜$"<__>" FmtAttrs
+Html ← ⊂"<!DOCTYPE html>\n" ⬚⍣°◌[]Tag "html"
 
-V! ←^ ⍚$"Void ⍣°◌[] _"
+# Defines void elements.
+# `Name ← "element"` defines a Uiua function
+# `Name` that creates an `element` html tag.
+# The function takes attributes as its only input.
+# Multiple elements can be defined via a pack.
+Void! ←^ /$"_\n_" ⍚(
+  Doc ↚ (
+    $$ # Creates a new `_` element.
+    $$ # Since this is a void element, it has
+    $$ # no content.
+    $$ # _ ? attrs
+    $$ _
+  ).⤚⋅°$$ "_"
 
-N! ←^ ⍚$"⬚⍣°◌[]Tag _"
+  ⍜°$"_ ← _"⊃Doc⋅$"Void _"
+)
 
-A      ← N!"a"
-Body   ← N!"body"
-Br     ← (V!"br")
-Button ← N!"button"
-Code   ← N!"code"
-Div    ← N!"div"
-Form   ← N!"form"
-H₁     ← N!"h1"
-H₂     ← N!"h2"
-H₃     ← N!"h3"
-H₄     ← N!"h4"
-Head   ← N!"head"
-Html   ← N!"html"
-Input  ← N!"input"
-Label  ← N!"label"
-LI     ← N!"li"
-Link   ← (V!"link")
-Meta   ← (V!"meta")
-Option ← N!"option"
-P      ← N!"p"
-Sample ← N!"sample"
-Script ← N!"script"
-Select ← N!"select"
-Style  ← N!"style"
-Title  ← N!"title"
-UL     ← N!"ul"
+Void!(
+  Area ← "area"
+| Base ← "base"
+| Br ← "br"
+| Col ← "col"
+| Embed ← "embed"
+| Hr ← "hr"
+| Img ← "img"
+| Input ← "input"
+| Link ← "link"
+| Meta ← "meta"
+| Source ← "source"
+| Track ← "track"
+| Wbr ← "wbr"
+)
+
+# Defines regular elements.
+# `Name ← "element"` defines a Uiua function
+# `Name` that creates an `element` html tag.
+# The function takes content as its only argument,
+# and attributes can be supplied via `fill`.
+# Multiple elements can be defined via a pack.
+Normal! ←^ /$"_\n_" ⍚(
+  Doc ↚ (
+    $$ # Creates a new `_` element.
+    $$ # To set attribute values, use an array of
+    $$ # box string pairs as the fill value.
+    $$ # _ ? content
+    $$ _
+  ).⤚⋅°$$ "_"
+
+  ⍜°$"_ ← _"⊃Doc⋅$"⬚⍣°◌[]Tag _"
+)
+
+Normal!(
+  A ← "a"
+| Body ← "body"
+| Button ← "button"
+| Code ← "code"
+| Div ← "div"
+| Form ← "form"
+| H₁ ← "h1"
+| H₂ ← "h2"
+| H₃ ← "h3"
+| H₄ ← "h4"
+| Head ← "head"
+| Header ← "header"
+| Input ← "input"
+| Label ← "label"
+| LI ← "li"
+| Main ← "main"
+| Nav ← "nav"
+| Option ← "option"
+| P ← "p"
+| Sample ← "sample"
+| Script ← "script"
+| Select ← "select"
+| Span ← "span"
+| Style ← "style"
+| Title ← "title"
+| UL ← "ul"
+)
