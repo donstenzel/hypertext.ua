@@ -1,57 +1,87 @@
 # Experimental!
 ~ "http" ~ ExtMime Extension Request Response
 
-E ← &p$"[Error] _\n"
+E ← &p$"Error: _"
 
-# Responds to a single request with router / handler
-Respond‼ ← ◌pool(
-  &p$"Request by _"⊸⊃&tcpaddr Request
-  &p⊃$"Method: _\nPath: _"⍣^0⋅⋅⋅⊃E^1
-  ⊃⊓⧻&cl&w Response
-  &p$"Response is _ bytes\n"
+# Configuration for the server.
+#  - Address: 4 numbers ∊ [0, 255]
+#  - Port: single number
+# Optional:
+#  - Cert: certificate data as string
+#  - Key: private key for certificate
+# cfg ? address port
+~Cfg {Address Port Cert ← ∞|Key ← ∞} ∘
+# TODO: add validator for address values in [0, 255]
+# and cert/key type = string
+
+# Responds to a single request with router / handler.
+Respond‼ ← (
+  &p⊸₂$"[_] _ _"⊸⊃&tcpaddr Request
+  ⍤@◌¬≍□"close"◡⋅⋅⬚∞(get"Connection")
+  &w Response ⍣^0⋅⋅⋅⋅⊃E^1
+)
+# TODO: better logging?
+
+# Establishes a connection and handles requests
+# synchronously on this connection.
+Connect‼ ← (
+  ◌ pool⍣⍢Respond‼^0^1 1 ⊃&cl(
+    &p$"[_] Closing connection."&tcpaddr
+  )⊸&tcpsrt 15 &tcpa
 )
 
-# Call this with a routing function and an
-# error handler. The resulting function expects
-# an ip address and a port: `? ip port`. The ip
-# should be four numbers and the port a single number.
-# The server will then run on the given address.
+# This macro expects two functions:
+# A function that represents your routes.
+# A function that handles errors by your routes.
+# The resulting function expects a config struct `Cfg`.
+# The server will then run on the given address. If both
+# certificate and private key are given, the server
+# will use TLS. If they don't match or are invalid
+# in some other way, there will be an error.
+# The server can handle multiple connections
+# concurrently, and handles requests on these
+# synchronously.
 Run‼ ← (
-  &tcpl $"_:_" /$"_._"
-  ⍢(Respond‼^0^1 &tcpa)1
+  ⍢Connect‼^0^1 1 ⨬&tcpl&tlsl Cfg!⊃(
+    ×∩(¬≍∞)⊃Cert Key
+  | $"_:_" /$"_._"⊃Address Port
+  | Cert
+  | Key
+  )
 )
 
 # saner version: now with semantic comment!
 
 # Given a box array of files and/or directories,
 # returns all files recursively.
-# files ? { bases }
+# files ? bases
 Files ← ⍥(/◇⊂⍚⨬&fld□⊸≡◇&fif)∞
 
 # sanitized ? file base
 SaneName ↚ ▽⟜⍜⊜□⍚⍜⊢⌵∊+@A⇡26⊸⌵˜⌝⊂°$"_.ua"
 
 # methods routes fn-names ? source
-Extract ↚ ◌≡°⊟₄ regex $ # Route! (GET|POST) ([a-zA-Z0-9/_]+)
+Extract ↚ ◌≡°⊟₄ regex $ # Route! (GET|POST) ([a-zA-Z0-9/_\-]+)
                       $ (\w+) ←
 
 # import ? path name
 Import ↚ ˜$"_ ~ \"_\""
 # patterns ? methods routes
 Patterns ↚ ⍚(
-  ⨬($"⊓°(\"_\")°(\"_\")"
-  | $"⊓°(\"_\"){°($\"_\")}"
+  ⨬($"⊓°(\"_\")°(\"_\")"    # no params in route
+  | $"⊓°(\"_\"){°($\"_\")}" # with params
   )◡⋅(∊⊙@_)
 )
 # functions ? names module
 Functions ↚ ⍚⌟˜$"_~_"
-# arms ? pattern function
+# arms ? patterns functions
 Arms ↚ ⍚˜$"⍩_ _"
-# output ? imports routes
+# output ? routes imports
 Fin ↚ ˜$$ _
        $$ 
        $$ Routes ← ⍣(
        $$   _
+       $$ | ⍤"No route declared"0
        $$ )
 
 Make ↚ Fin ⊓/$"_\n| _" /$"_\n_" /◇⊂⍚(

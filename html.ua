@@ -1,7 +1,7 @@
 ~ "utils" ~ IndentBy Replace ⊝
 
-FmtAttrs   ← ⍥$" _"±⊸⧻ ⊝@\s ⍚/$"_=\"_\""
-FmtContent ← ⍥(⊝@\n)=₂⊸type
+FmtAttrs   ← ⍥$" _"±◇⊸⧻ ⊝@\s ⍚₁/$"_=\"_\""
+FmtContent ← /◇$"_\n_" ⍥¤≍[]⊸△
 
 # Escapes certain characters for html.
 Escape ← (
@@ -11,16 +11,27 @@ Escape ← (
 )
 
 # use fill value for attributes.
-# behavior based on content:
-# - empty or single box → tag with inlined content
-# - more elements → expanded tag
+# inlining behavior based on content:
+# - single line string → same line tag
+# - multi line string, single box, box array → expanded tag
+# - number / complex (array) → same line tag
+# since tags eagerly produce strings, nested tags
+# can be boxed to force expansion if there is only
+# a single sub element: `Div □ A "Link"`
 # html ? name content
 Tag ← ⨬(
   ⤚⊙⊓(FmtAttrs ⍣°◌[]|FmtContent)
   $"<__>_</_>"
-| ⤚⊙⊓(FmtAttrs ⍣°◌[]|IndentBy "  " FmtContent)
+| $"<__>_</_>"⤚⊙⊓(
+    FmtAttrs ⍣°◌[]
+  | ¬⊸/↧⊸≠@\n
+    ⨬◌($"\n_\n" ⍜⊜□⍚$"  _")
+  )
+| ⤚⊙⊓(FmtAttrs ⍣°◌[]|⍜⊜□⍚$"  _"⊸≠@\n FmtContent)
   $"<__>\n_\n</_>"
-)↥₀-₁↧₂◡⋅⧻
+| ⤚⊙⊓(FmtAttrs ⍣°◌[]|FmtContent)
+  $"<__>_</_>"
+)◡⋅type
 
 # html ? name attributes
 Void ← $"<__>" ⊙FmtAttrs
@@ -71,6 +82,7 @@ Normal! ←^ /$"_\n_" ⍚(
     $$ # Creates a new `_` element.
     $$ # To set attribute values, use an array of
     $$ # box string pairs as the fill value.
+    $$ # See `Tag` for explanation of inlining.
     $$ # _ ? content
     $$ _
   ).⤚⋅°$$ "_"
@@ -89,6 +101,8 @@ Normal!(
 | H₂ ← "h2"
 | H₃ ← "h3"
 | H₄ ← "h4"
+| H₅ ← "h5"
+| H₆ ← "h6"
 | Head ← "head"
 | Header ← "header"
 | Input ← "input"
@@ -98,6 +112,7 @@ Normal!(
 | Nav ← "nav"
 | Option ← "option"
 | P ← "p"
+| Pre ← "pre"
 | Sample ← "sample"
 | Script ← "script"
 | Select ← "select"
