@@ -15,22 +15,23 @@ Escape ← (
 # - single line string → same line tag
 # - multi line string, single box, box array → expanded tag
 # - number / complex (array) → same line tag
+# - box array → each element in indented and joined with newlines
 # since tags eagerly produce strings, nested tags
 # can be boxed to force expansion if there is only
 # a single sub element: `Div □ A "Link"`
 # html ? name content
 Tag ← ⨬(
-  ⤚⊙⊓(FmtAttrs ⍣°◌[]|FmtContent)
-  $"<__>_</_>"
+  $"<__>_</_>"⤚⊙⊓(FmtAttrs ⍣°◌[]|FmtContent)
 | $"<__>_</_>"⤚⊙⊓(
     FmtAttrs ⍣°◌[]
   | ¬⊸/↧⊸≠@\n
     ⨬◌($"\n_\n" ⍜⊜□⍚$"  _")
   )
-| ⤚⊙⊓(FmtAttrs ⍣°◌[]|⍜⊜□⍚$"  _"⊸≠@\n FmtContent)
-  $"<__>\n_\n</_>"
-| ⤚⊙⊓(FmtAttrs ⍣°◌[]|FmtContent)
-  $"<__>_</_>"
+| $"<__>_</_>"⤚⊙⊓(
+    FmtAttrs ⍣°◌[]
+  | ⨬⋅""($"\n_\n" ⍜⊜□⍚$"  _"⊸≠@\n FmtContent)±⊸⧻
+  )
+| $"<__>_</_>"⤚⊙⊓(FmtAttrs ⍣°◌[]|FmtContent)
 )◡⋅type
 
 # html ? name attributes
@@ -92,6 +93,7 @@ Normal! ←^ /$"_\n_" ⍚(
 
 Normal!(
   A ← "a"
+| B ← "b"
 | Body ← "body"
 | Button ← "button"
 | Code ← "code"

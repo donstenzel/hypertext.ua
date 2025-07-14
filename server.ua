@@ -1,33 +1,52 @@
 # Experimental!
 ~ "http" ~ ExtMime Extension Request Response
 
-E ← &p$"Error: _"
+# Nicely formatted timestamp.
+# time ?
+Time ↚ (
+  ⍜⊙⊏₃+timezone datetime now
+  ⍜↙₋₃⍚⬚⌞@0⍜⧻⋅2°⋕
+  °[°$"_-_-_ _:_:_"]
+)
+
+┌╶╶E
+  # ? message
+  Connection ← &p $"[@ _] Error establishing connection: _" Time
+
+  # ? message socket
+  Response ← &p $"[_ @ _] Error responding: _" ⊓&tcpaddr Time
+└╶╶
+
+┌╶╶V
+  File    ← ⍤$"File does not exist: _"⤙⨬1&fe¬⊸≍∞
+  Byte    ← ⍤$"Not a valid byte: _"⤙∊⇡256
+  Address ← ⊃(⍤"Must be four bytes."=₄⧻|≡Byte)
+  Port    ← °0type
+└╶╶
 
 # Configuration for the server.
 #  - Address: 4 numbers ∊ [0, 255]
 #  - Port: single number
 # Optional:
-#  - Cert: certificate data as string
-#  - Key: private key for certificate
+#  - Cert: certificate path
+#  - Key: private key path
 # cfg ? address port
-~Cfg {Address Port Cert ← ∞|Key ← ∞} ∘
-# TODO: add validator for address values in [0, 255]
-# and cert/key type = string
+~Cfg {Address: V~Address|Port: V~Port|Cert: V~File ← ∞|Key: V~File ← ∞} ∘
 
 # Responds to a single request with router / handler.
 Respond‼ ← (
-  &p⊸₂$"[_] _ _"⊸⊃&tcpaddr Request
+  &p⊸₂$"[_ @ _] _ _"⊙Time⊸⊃&tcpaddr Request
   ⍤@◌¬≍□"close"◡⋅⋅⬚∞(get"Connection")
-  &w Response ⍣^0⋅⋅⋅⋅⊃E^1
+  &w Response ⍣⊓^0∘⋅⋅⋅⋅⊃⋅^1⤚E~Response
 )
-# TODO: better logging?
 
 # Establishes a connection and handles requests
 # synchronously on this connection.
 Connect‼ ← (
   ◌ pool⍣⍢Respond‼^0^1 1 ⊃&cl(
-    &p$"[_] Closing connection."&tcpaddr
-  )⊸&tcpsrt 15 &tcpa
+    ⊓&tcpaddrTime
+    &p$"[_ @ _] Closing connection."
+  )⊸&tcpsrt 30 &tcpa
 )
 
 # This macro expects two functions:
@@ -42,12 +61,13 @@ Connect‼ ← (
 # concurrently, and handles requests on these
 # synchronously.
 Run‼ ← (
-  ⍢Connect‼^0^1 1 ⨬&tcpl&tlsl Cfg!⊃(
+  ⨬&tcpl&tlsl Cfg!⊃(
     ×∩(¬≍∞)⊃Cert Key
   | $"_:_" /$"_._"⊃Address Port
-  | Cert
-  | Key
+  | ∩(⍥&fras¬⊸≍∞) ⊃Cert Key
   )
+
+  ⍢⍣⟜Connect‼^0^1⊙E~Connection 1
 )
 
 # saner version: now with semantic comment!
@@ -99,11 +119,15 @@ Make ↚ Fin ⊓/$"_\n| _" /$"_\n_" /◇⊂⍚(
 # passed to the function. Defines a function `Routes` that
 # matches the requests and delegates to relevant functions.
 # When no placeholders are used, only the payload is passed.
+# NOTE: routes must be defined at the top level of a file.
 MakeRoutes! ←^ Make ◇°$"\"_\""⊢
 
 # Returns response data that represents a file.
-# `valid` is a box array of files to serve directly.
-# When `path` is a member of `valid`, that file is
-# served.
-# code type data ? valid "GET" path
+# `valid` should be a box array of files to serve directly.
+# When `path` is a member of `valid`, that file is served.
+# Relative paths on a server will be routed as `/.../...`
+# so remember that all paths must start with a slash,
+# unlike the actual file paths. You can simply `⍚⊂@/`
+# after collecting the actual file paths.
+# code type data ? valid GET path
 Assets ← "200 OK"⊃ExtMime&frab↘₁⤙⊃⋅°"GET"𝄐(⍤"No asset declared"∊⊙□)

@@ -35,6 +35,7 @@ Response ← (
   $$ 
   ⊂ utf₈
 )
+# TODO: allow headers as input to response
 
 # decodes a singly byte
 D ↚ °⊥₁₆⇌⊗⊙HexDigits ¯⌵°$"%_"
@@ -43,9 +44,11 @@ D ↚ °⊥₁₆⇌⊗⊙HexDigits ¯⌵°$"%_"
 Decode ← ⍜⊜□⍚(
   °utf₈ ⧈D¤¤3
 )±⊸⦷"%\W\W" ⍜▽⋅@\s⊸=@+
+# TODO: url encode
 
 # constructs a map from form-data
 # map ? data
 ParseQuery ← (
   map°⊟⍉⊜{∩Decode °$"_=_"}⊸≠@&
 )
+# TODO: build query
