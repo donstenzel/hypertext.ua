@@ -1,7 +1,6 @@
 ~ "utils" ~ IndentBy Replace ⊝
 
 FmtAttrs   ← ⍥$" _"±◇⊸⧻ ⊝@\s ⍚₁/$"_=\"_\""
-FmtContent ← /◇$"_\n_" ⍥¤≍[]⊸△
 
 # Escapes certain characters for html.
 Escape ← (
@@ -10,29 +9,28 @@ Escape ← (
   Replace @> "&gt;"
 )
 
+S ← ⍥($"\n_\n"⍜⊜□⍚$"  _"⊸≠@\n)⤚∊⊙@\n
+I ← ⍜⊜□⍚$"  _"⊸≠@\n
+M ← ¬↥⊓(≍[]|≍0)⊃△⧻
+B ← ⍥($"\n_\n"I)⊃M/◇$"_\n_"
+T ← ⨬(∘|S|B|∘)⊸type
+
 # use fill value for attributes.
 # inlining behavior based on content:
 # - single line string → same line tag
-# - multi line string, single box, box array → expanded tag
+# - multi line string → expanded tag
 # - number / complex (array) → same line tag
-# - box array → each element in indented and joined with newlines
+# - scalar box → forces inline
+# - empty box array → same line empty tag
+# - box array → each element is indented and joined with newlines
 # since tags eagerly produce strings, nested tags
 # can be boxed to force expansion if there is only
-# a single sub element: `Div □ A "Link"`
+# a single sub element: `Div □₁ A "Link"`
+# Alternatively, if you wish to have multiple
+# tags on the same line, like in a `<pre><code>` block,
+# you can simply box the inner element.
 # html ? name content
-Tag ← ⨬(
-  $"<__>_</_>"⤚⊙⊓(FmtAttrs ⍣°◌[]|FmtContent)
-| $"<__>_</_>"⤚⊙⊓(
-    FmtAttrs ⍣°◌[]
-  | ¬⊸/↧⊸≠@\n
-    ⨬◌($"\n_\n" ⍜⊜□⍚$"  _")
-  )
-| $"<__>_</_>"⤚⊙⊓(
-    FmtAttrs ⍣°◌[]
-  | ⨬⋅""($"\n_\n" ⍜⊜□⍚$"  _"⊸≠@\n FmtContent)±⊸⧻
-  )
-| $"<__>_</_>"⤚⊙⊓(FmtAttrs ⍣°◌[]|FmtContent)
-)◡⋅type
+Tag ← $"<__>_</_>" ⤚⊙⊓(FmtAttrs⍣°◌[]|T)
 
 # html ? name attributes
 Void ← $"<__>" ⊙FmtAttrs

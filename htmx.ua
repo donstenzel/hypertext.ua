@@ -1,9 +1,9 @@
 # Experimental!
 ~ "html.ua" ~ Body Button Div Head Html H₁ Label Script
-~ "server" ~ Run‼
+~ "server" ~ Run‼ Cfg
 
 ┌─╴Page
-  GET! ← "200 OK" "text/html" utf₈ ⊂"<!DOCTYPE html>\n" ⋅^0
+  GET! ← "200 OK" "text/html" utf₈ ⊂"<!DOCTYPE html>\n" ⋅⋅^0
   New ← GET!(
     Html {
       Head ⬚∘Script [{"src" "https://unpkg.com/htmx.org@2.0.4"}] {}
@@ -33,4 +33,5 @@ Routes ← ⍣(
 | Page~More °("GET" "/more")
 )
 
+Cfg 0_0_0_0 8000
 Run‼(Routes|"500 Internal Server Error" "text/plain" utf₈)

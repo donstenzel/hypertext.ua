@@ -11,7 +11,7 @@ SpecialMimes ← map°⊟⍉[
   {"ttf" "font/ttf"}
 ]
 
-ExtMime ← (
+Mime ← (
   ⍣get$"text/_" ⊙SpecialMimes Extension
 )
 
