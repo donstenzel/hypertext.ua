@@ -6,4 +6,4 @@
 - [ ] (optional) persistent logging to a file
 
 - [ ] headers in response
-- [ ] url encode
+- [x] url encode

@@ -37,18 +37,40 @@ Response ← (
 )
 # TODO: allow headers as input to response
 
-# decodes a singly byte
-D ↚ °⊥₁₆⇌⊗⊙HexDigits ¯⌵°$"%_"
+┌─╴URL
+  # Optional:
+  #  - Query
+  #  - Fragment
+  # url ? url
+  ~New {Query ← ""|Fragment ← ""} (
+    ⊂₃⊃(⋅∘|⍥$"?_"±⊸⧻Query|⍥$"#_"±⊸⧻Fragment)
+  )
 
-# decodes url percent encoded string
-Decode ← ⍜⊜□⍚(
-  °utf₈ ⧈D¤¤3
-)±⊸⦷"%\W\W" ⍜▽⋅@\s⊸=@+
-# TODO: url encode
+  Safe ↚ ⊂₄⟜⌵+@a⇡26+@0⇡10"._-~"
 
-# constructs a map from form-data
-# map ? data
-ParseQuery ← (
-  map°⊟⍉⊜{∩Decode °$"_=_"}⊸≠@&
-)
-# TODO: build query
+  # decodes a single byte
+  D ↚ °⊥₁₆⇌⊗⊙HexDigits ¯⌵°$"%_"
+
+  # decodes url percent encoded string
+  Decode ↚ ⍜⊜□⍚(
+    °utf₈ ⧈D¤¤3
+  )±⊸⦷"%\W\W" ⍜▽⋅@\s⊸=@+
+
+  # encodes a single character
+  E ↚ /⊂≡°D utf₈
+
+  # encodes url query component
+  Encode ↚ ◌°⊕°(⍥E¬⊸∊Safe)
+
+  # formats query components from map
+  # query ? kvs
+  MakeQuery ← /$"_&_" ⍚$"_=_" ∩⍚Encode °map
+
+  # constructs a map from form-data
+  # map ? data
+  ParseQuery ← map°⊟⍉⊜{∩Decode °$"_=_"}⊸≠@&
+
+  # formats a query component from a map
+  # `°Query` parses a query into a map
+  Query ← ⌅(MakeQuery|ParseQuery)
+└─╴
