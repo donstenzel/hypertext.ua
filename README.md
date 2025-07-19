@@ -32,7 +32,7 @@ use the tags inside the module.
 Here's what a random div with a codeblock and a link looks like:
 ```uiua
 Div {
-  ⬚∘A [{"href" "/some/page.html"}] "Link!"
+  ⬚∘A {"href" "/some/page.html"} "Link!"
 
   Code $ def add(x, y):
        $   return x + y
@@ -46,22 +46,8 @@ Attributes are optionally given via `⬚ fill`, as seen in the example.
 [`http.ua`](http.ua) contains request/response and parsing related functions.
 
 
-[`utils.ua`](utils.ua) holds a couple of functions which are used across files,
-or don't really belong to any other component.
-
-
 [`lib.ua`](lib.ua) simply exposes the different modules.
 
 ### Example site
 
 An example site can be found [here](https://github.com/donstenzel/htua-example).
-
-### Notes
-
-Paths may be system specific for now, but it should be limited to things
-related to the website example, not the library code.
-
-Some of the macro stuff is kinda insane lol. I think some sort of interface
-system would make this a lot nicer. If each page was just an implementation
-of an interface, the server could just use the relevant functions by loading
-the file as a concretization of the abstract module.

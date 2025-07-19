@@ -1,12 +1,12 @@
-~ "utils" ~ IndentBy Replace ⊝
-
-FmtAttrs   ← ⍥$" _"±◇⊸⧻ ⊝@\s ⍚₁/$"_=\"_\""
+FmtAttrs ← ⍥$" _"±◇⊸⧻ /◇$"_ _" ⍚₁/$"_=\"_\""
 
 # Escapes certain characters for html.
+# Useful for code blocks.
 Escape ← (
-  Replace @& "&amp;"
-  Replace @< "&lt;"
-  Replace @> "&gt;"
+  R ← ⍜⊜∘⊞⋅∘⊸⦷⊙:
+  R @& "&amp;"
+  R @< "&lt;"
+  R @> "&gt;"
 )
 
 S ← ⍥($"\n_\n"⍜⊜□⍚$"  _"⊸≠@\n)⤚∊⊙@\n
