@@ -1,5 +1,5 @@
 # Experimental!
-~ "http" ~ Mime Extension Request Response
+~ "http" ~ Extension Mime Request Response
 
 # Nicely formatted timestamp.
 # time ?
@@ -130,4 +130,7 @@ MakeRoutes! ←^ Make ◇°$"\"_\""⊢
 # unlike the actual file paths. You can simply `⍚⊂@/`
 # after collecting the actual file paths.
 # code type data ? valid GET path
-Assets ← "200 OK"⊃Mime&frab↘₁⤙⊃⋅°"GET"𝄐(⍤"No asset declared"∊⊙□)
+Assets ← (
+  ⊃Mime&frab↘₁⤙⊃⋅°"GET"𝄐(⍤"No asset declared"∊⊙□)
+  "200 OK" map∩□"Content-Type"
+)

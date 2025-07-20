@@ -9,34 +9,15 @@ SpecialMimes ← map°⊟⍉[
   {"gif" "image/gif"}
   {"mp4" "video/mp4"}
   {"ttf" "font/ttf"}
+  {"woff" "font/woff"}
+  {"woff2" "font/woff2"}
 ]
 
 Mime ← (
   ⍣get$"text/_" ⊙SpecialMimes Extension
 )
 
-Headers ← map⊜°◇$"_: _"¬⊸⦷"\r\n"
-
-# method path headers data ? socket
-Request ← (
-  &rs 1e5 # ∞ doesn't work so here's an arbitrary limit instead.
-  °$"_ _ HTTP/1.1\r\n_"
-  ⊙⊙(Headers °$"_\r\n\r\n_")
-)
-
-# utf₈-response ? code type utf₈-content
-Response ← (
-  ⊙⊙⊸⧻
-  $$ HTTP/1.1 _
-  $$ Content-Type: _
-  $$ Content-Length: _
-  $$ Connection: keep-alive
-  $$ 
-  $$ 
-  ⊂ utf₈
-)
-# [TODO] CRLF
-# [TODO] allow headers as input to response
+Headers ← /$"_\r\n_" ⍚₀$"_: _" °map
 
 ┌─╴URL
   # Optional:
@@ -75,3 +56,21 @@ Response ← (
   # `°Query` parses a query into a map
   Query ← ⌅(MakeQuery|ParseQuery)
 └─╴
+
+# method path headers data ? socket
+Request ← (
+  &rs 1e5 # ∞ doesn't work so here's an arbitrary limit instead.
+  °$"_ _ HTTP/1.1\r\n_\r\n\r\n_"
+  ⊙⊙°Headers
+)
+
+# ~Request {Method Path Query Fragment Headers Data}
+
+# `code` should be an HTTP return code (i.e. "200 OK"),
+# `headers` a map and `data` the raw data in bytes.
+# [NOTE] you should always specify a Content-Type header.
+# response ? code headers data
+Response ← ⊂utf₈$"_\r\n_\r\n\r\n"⊓(
+  $"HTTP/1.1 _"
+| Headers insert"Content-Length"◡⋅⧻
+)
