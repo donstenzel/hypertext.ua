@@ -35,7 +35,8 @@ Response ← (
   $$ 
   ⊂ utf₈
 )
-# TODO: allow headers as input to response
+# [TODO] CRLF
+# [TODO] allow headers as input to response
 
 ┌─╴URL
   # Optional:
@@ -49,7 +50,7 @@ Response ← (
   Safe ↚ ⊂₄⟜⌵+@a⇡26+@0⇡10"._-~"
 
   # decodes a single byte
-  D ↚ °⊥₁₆⇌⊗⊙HexDigits ¯⌵°$"%_"
+  D ↚ °⊥₁₆⇌⊗⊙HexDigits ¯⌅⌵°$"%_"
 
   # decodes url percent encoded string
   Decode ↚ ⍜⊜□⍚(
