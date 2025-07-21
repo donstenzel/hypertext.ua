@@ -1,4 +1,4 @@
-- [ ] optional args instead of fill value for tags
+- [/] optional args instead of fill value for tags
   Something like `Div α:{"class" "bubble"} {...}`
   - [x] functions
     `html.exp.ua` has these for now, not sure if I want to commit
@@ -10,7 +10,7 @@
 - [x] headers in response
 - [x] url encode
 
-- [ ] structure for a request:
+- [x] structure for a request:
   - method
   - path
   - query

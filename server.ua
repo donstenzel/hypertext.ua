@@ -1,5 +1,5 @@
 # Experimental!
-~ "http" ~ Extension Mime Request Response
+~ "http" ~ Extension Mime Receive Req Response
 
 # Nicely formatted timestamp.
 # time ?
@@ -13,7 +13,7 @@ Time ↚ (
   # ? message
   Connection ← &p $"[@ _] Error establishing connection: _" Time
 
-  # ? message socket
+  # ? socket message
   Response ← &p $"[_ @ _] Error responding: _" ⊓&tcpaddr Time
 └╶╶
 
@@ -35,9 +35,10 @@ Time ↚ (
 
 # Responds to a single request with router / handler.
 Respond‼ ← (
-  &p⊸₂$"[_ @ _] _ _"⊙Time⊸⊃&tcpaddr Request
-  ⍤@◌¬≍□"close"◡⋅⋅⬚∞(get"Connection")
-  &w Response ⍣⊓^0∘⋅⋅⋅⋅⊃⋅^1⤚E~Response
+  ⊃&tcpaddr⊸Receive
+  &p$"[_ @ _] _ _"⊙⊓Time⊸Req!⊃Method Path
+  ⍤@◌¬≍□"close"⬚∞get"Connection"⊸Req~Headers
+  &w Response ⍣⊓^0∘⋅⊃⋅^1⤚E~Response
 )
 
 # Establishes a connection and handles requests
@@ -102,7 +103,7 @@ Fin ↚ ˜$$ _
        $$ Routes ← ⍣(
        $$   _
        $$ | ⍤"No route declared"0
-       $$ )
+       $$ )⊸Req!⊃Method Path
 
 Make ↚ Fin ⊓/$"_\n| _" /$"_\n_" /◇⊂⍚(
   ⊃⊓&fras∘Import⟜SaneName
@@ -119,7 +120,8 @@ Make ↚ Fin ⊓/$"_\n| _" /$"_\n_" /◇⊂⍚(
 # passed to the function. Defines a function `Routes` that
 # matches the requests and delegates to relevant functions.
 # When no placeholders are used, only the payload is passed.
-# NOTE: routes must be defined at the top level of a file.
+# [NOTE] routes must be defined at the top level of a file and
+# you must import the `Req` struct.
 MakeRoutes! ←^ Make ◇°$"\"_\""⊢
 
 # Returns response data that represents a file.
@@ -129,8 +131,13 @@ MakeRoutes! ←^ Make ◇°$"\"_\""⊢
 # so remember that all paths must start with a slash,
 # unlike the actual file paths. You can simply `⍚⊂@/`
 # after collecting the actual file paths.
-# code type data ? valid GET path
+# code type data ? valid request
 Assets ← (
-  ⊃Mime&frab↘₁⤙⊃⋅°"GET"𝄐(⍤"No asset declared"∊⊙□)
-  "200 OK" map∩□"Content-Type"
+  Req!⊃(
+    ⋅Path
+  | ≍"GET"⋅Method
+    ⍤"Assets must be accessed with GET"
+  | ⍤"No asset declared"∊⊙□⊙Path
+  )
+  "200 OK" map∩□"Content-Type" ⊃Mime&frab↘₁
 )

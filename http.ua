@@ -20,12 +20,10 @@ Mime ← (
 Headers ← /$"_\r\n_" ⍚₀$"_: _" °map
 
 ┌─╴URL
-  # Optional:
-  #  - Query
-  #  - Fragment
-  # url ? url
-  ~New {Query ← ""|Fragment ← ""} (
-    ⊂₃⊃(⋅∘|⍥$"?_"±⊸⧻Query|⍥$"#_"±⊸⧻Fragment)
+  # url ? url query fragment
+  New ← ⌅(
+    ⊂₃⊙⊓(⍥$"?_"±⊸⧻|⍥$"#_"±⊸⧻)
+  | ⊙∩↘₁ ⊃↙↘⊸⊗@? ⊃↙↘⊸⊗@#
   )
 
   Safe ↚ ⊂₄⟜⌵+@a⇡26+@0⇡10"._-~"
@@ -57,14 +55,14 @@ Headers ← /$"_\r\n_" ⍚₀$"_: _" °map
   Query ← ⌅(MakeQuery|ParseQuery)
 └─╴
 
-# method path headers data ? socket
-Request ← (
+~Req {Method Path Query Headers Data}
+
+# request ? handle
+Receive ← (
   &rs 1e5 # ∞ doesn't work so here's an arbitrary limit instead.
   °$"_ _ HTTP/1.1\r\n_\r\n\r\n_"
-  ⊙⊙°Headers
+  Req ⊙⊙⊙◌ ⊓⊙°URL°Headers
 )
-
-# ~Request {Method Path Query Fragment Headers Data}
 
 # `code` should be an HTTP return code (i.e. "200 OK"),
 # `headers` a map and `data` the raw data in bytes.
