@@ -1,7 +1,7 @@
 # Experimental!
 Extension ← ⍜⇌(▽¬\↥⊸=@.)
 
-SpecialMimes ← map°⊟⍉[
+Mimes ← map°⊟⍉[
   {"js" "text/javascript"}
   {"wasm" "application/wasm"}
   {"json" "application/json"}
@@ -14,7 +14,7 @@ SpecialMimes ← map°⊟⍉[
 ]
 
 Mime ← (
-  ⍣get$"text/_" ⊙SpecialMimes Extension
+  ⍣get$"text/_" ⊙Mimes Extension
 )
 
 Headers ← /$"_\r\n_" ⍚₀$"_: _" °map

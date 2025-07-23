@@ -31,7 +31,12 @@ Time ↚ (
 #  - Cert: certificate path
 #  - Key: private key path
 # cfg ? address port
-~Cfg {Address: V~Address|Port: V~Port|Cert: V~File ← ∞|Key: V~File ← ∞} ∘
+~Cfg {
+  Address: V~Address
+  Port: V~Port
+  Cert: V~File ← ∞
+  Key: V~File ← ∞
+} ∘
 
 # Responds to a single request with router / handler.
 Respond‼ ← (
