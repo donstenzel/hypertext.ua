@@ -23,13 +23,13 @@ Headers ← /$"_\r\n_" ⍚₀$"_: _" °map
   # url ? url query fragment
   New ← ⌅(
     ⊂₃⊙⊓(⍥$"?_"±⊸⧻|⍥$"#_"±⊸⧻)
-  | ⊙∩↘₁ ⊃↙↘⊸⊗@? ⊃↙↘⊸⊗@#
+  | ⊙∩↘₁ ⊃↙↘⤚⨂⊙@? ⊃↙↘⤚⨂⊙@#
   )
 
   Safe ↚ ⊂₄⟜⌵+@a⇡26+@0⇡10"._-~"
 
   # decodes a single byte
-  D ↚ °⊥₁₆⇌⊗⊙HexDigits ¯⌅⌵°$"%_"
+  D ↚ °⊥₁₆⇌⨂HexDigits ¯⌅⌵°$"%_"
 
   # decodes url percent encoded string
   Decode ↚ ⍜⊜□⍚(

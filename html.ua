@@ -3,7 +3,7 @@ FmtAttrs ← ⍥$" _"±◇⊸⧻ /◇$"_ _" ⍚₁/$"_=\"_\""
 # Escapes certain characters for html.
 # Useful for code blocks.
 Escape ← (
-  R ← ⍜⊜∘⊞⋅∘⊸⦷⊙:
+  R ← ⍜⊜∘⊞⋅∘⊸⦷⊙⤙⊙◌
   R @& "&amp;"
   R @< "&lt;"
   R @> "&gt;"
@@ -51,7 +51,7 @@ Void! ←^ /$"_\n_" ⍚(
     $$ # no content.
     $$ # _ ? attrs
     $$ _
-  ).⤚⋅°$$ "_"
+  )⟜∘⤚⋅°$$ "_"
 
   ⍜°$"_ ← _"⊃Doc⋅$"Void _"
 )
@@ -86,7 +86,7 @@ Normal! ←^ /$"_\n_" ⍚(
     $$ # See `Tag` for explanation of inlining.
     $$ # _ ? content
     $$ _
-  ).⤚⋅°$$ "_"
+  )⟜∘⤚⋅°$$ "_"
 
   ⍜°$"_ ← _"⊃Doc⋅$"⬚⍣°◌[]Tag _"
 )
